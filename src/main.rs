@@ -230,12 +230,14 @@ impl SampleCandidateList {
         let p = self.get_correct_measurement_probability();
 
         let mut range_to_resample = {
-            // We assume that the matchup
             let a_position = self.ordering.iter().position(|x| *x == matchup.a).unwrap();
             let b_position = self.ordering.iter().position(|x| *x == matchup.b).unwrap();
-            debug_assert!(b_position < a_position);
 
-            &mut self.ordering[b_position..=a_position]
+            if a_position < b_position {
+                &mut self.ordering[a_position..=b_position]
+            } else {
+                &mut self.ordering[b_position..=a_position]
+            }
         };
 
         match sampling_strategy {
@@ -934,13 +936,13 @@ mod test {
             TEST_CHARACTER_LENGTH
         );
 
-        dbg!(sorting_data.get_most_valuable_matchups(4));
-        dbg!(sorting_data.get_most_valuable_matchups(5));
-        dbg!(sorting_data.get_most_valuable_matchups(6));
+        // dbg!(sorting_data.get_most_valuable_matchups(4));
+        // dbg!(sorting_data.get_most_valuable_matchups(5));
+        // dbg!(sorting_data.get_most_valuable_matchups(6));
 
-        dbg!(sorting_data.cached_matchup_data.len() * std::mem::size_of::<CachedMatchupValue>());
+        // dbg!(sorting_data.cached_matchup_data.len() * std::mem::size_of::<CachedMatchupValue>());
 
-        assert!(false);
+        // assert!(false);
     }
 
     #[test]
