@@ -357,7 +357,7 @@ impl SampleCandidateList {
             } => {
                 // Cache the results of range_to_resample.contains(idx) for all indexes.
                 let range_contains_map = {
-                    let mut map = vec![false; max_sorting_index.0];
+                    let mut map = vec![false; max_sorting_index.0 + 1];
                     for sorting_idx in range_to_resample.iter() {
                         map[sorting_idx.0] = true;
                     }
@@ -387,7 +387,7 @@ impl SampleCandidateList {
                 let mut betas = range_to_resample
                     .iter()
                     .map(|sorting_idx| {
-                        let n_dispute = *all_n_disputes.get(sorting_idx).unwrap();
+                        let n_dispute = *all_n_disputes.get(sorting_idx).unwrap_or(&0);
                         base_beta.powi(n_dispute)
                     })
                     .collect::<Vec<_>>(); // TODO: experiment with Vec vs LinkedList perf
@@ -399,7 +399,7 @@ impl SampleCandidateList {
                     let threshold = rng.random::<f64>();
 
                     let mut total_beta_value = 0.0;
-                    for i in 0..betas.len() {
+                    'find_next_max: for i in 0..betas.len() {
                         total_beta_value += betas[i] / beta_sum;
                         if total_beta_value >= threshold {
                             // We accept the new sample as the largest
@@ -410,6 +410,7 @@ impl SampleCandidateList {
                             betas.swap(i, max_len);
 
                             (_, range_to_resample) = range_to_resample.split_last_mut().unwrap();
+                            break 'find_next_max;
                         }
                     }
                 }
@@ -455,7 +456,7 @@ impl SampleCandidateList {
                 self.resample_range(
                     matchup,
                     // TODO: select sampling strategy dynamically
-                    SamplingStrategy::Recursion {
+                    SamplingStrategy::ByMaxElement {
                         comparison_history,
                         max_sorting_index,
                     },
