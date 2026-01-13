@@ -1,0 +1,1 @@
+c = a.map((meta) => { return { "g": `${randomUUID()}_${meta.name.replace(' ', '_').toLowerCase()}`, "d": meta.name, "u": `https://tohosort.frelia.my/src/assets/chars/${meta.img}`, "t": meta.opts.series.concat(meta.opts.stage) }; });

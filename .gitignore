@@ -1,3 +1,6 @@
 /target
 *.json
 *.json.gz
+/*.js
+*.bson
+*.bson.gz

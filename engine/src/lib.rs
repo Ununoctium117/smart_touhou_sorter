@@ -1,46 +1,51 @@
 //! This is based on the paper "Monte Carlo Sort for unreliable human comparisons" by Samuel L. Smith:
-//! https://arxiv.org/abs/1612.08555.
+//! <https://arxiv.org/abs/1612.08555>.
 
-use std::{
-    collections::{BTreeMap, BTreeSet, HashMap},
-    fs::File,
-    io::{BufReader, BufWriter},
-    path::PathBuf,
-};
+#![deny(unsafe_code, missing_docs)]
 
-use anyhow::{Context, Result};
-use clap::Parser as _;
-use flate2::{Compression, write::GzEncoder};
+use std::collections::{BTreeMap, BTreeSet, HashMap};
+
 use jiff::Timestamp;
 use ordered_float::NotNan;
 use rand::{Rng as _, RngCore, seq::SliceRandom as _};
 use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
 
+/// Metadata for a character to be sorted.
 #[derive(Debug, Serialize, Deserialize, Clone)]
-#[cfg_attr(test, derive(Default))]
-struct CharacterMetadata {
+pub struct CharacterMetadata {
+    /// A globally unique ID for the character.
     #[serde(rename = "g")]
-    globally_unique_id: String,
+    pub globally_unique_id: String,
+    /// A display name for the character.
     #[serde(rename = "d")]
-    display_name: String,
+    pub display_name: String,
+    /// A URL for a character's image.
     #[serde(rename = "u")]
-    image_url: String,
+    pub image_url: String,
+    /// Any tags that apply to this character.
+    #[serde(rename = "t", skip_serializing_if = "Vec::is_empty", default)]
+    pub tags: Vec<String>,
 }
 
-/// Sorting IDs are numeric and must start at 0 with no gaps, to allow matchups to be encoded into indices.
+/// Each character is assigned a sorting index when sorting begins. Cheaply copyable.
+// Sorting IDs are numeric and must start at 0 with no gaps, to allow matchups to be encoded into indices.
 #[derive(Debug, Serialize, Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 #[serde(transparent)]
-struct SortingIndex(usize);
+pub struct SortingIndex(usize);
 
+/// Represents a matchup between two characters.
 #[derive(Debug, Serialize, Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord, Clone)]
-struct Matchup {
+pub struct Matchup {
     // invariant: a < b
-    a: SortingIndex,
-    b: SortingIndex,
+    /// The smaller index
+    pub a: SortingIndex,
+    /// The larger index
+    pub b: SortingIndex,
 }
 impl Matchup {
-    fn new(a: SortingIndex, b: SortingIndex) -> Self {
+    /// Constructs a new matchup. Matchup::new(a, b) and Matchup::new(b, a) are equivalent.
+    pub fn new(a: SortingIndex, b: SortingIndex) -> Self {
         assert_ne!(a, b);
 
         Self {
@@ -146,7 +151,7 @@ struct MatchupIndex(usize);
 /// outcome were 1.0.
 #[derive(Debug, Serialize, Deserialize, PartialEq, PartialOrd, Clone, Copy)]
 #[serde(transparent)]
-struct EvaluationOutcome(f64);
+pub struct EvaluationOutcome(pub f64);
 
 // A unique identifier for a candidate list.
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Copy)]
@@ -202,7 +207,7 @@ struct SampleCandidateList {
     matching_comparisons_seen: usize,
 }
 impl SampleCandidateList {
-    fn new(metadata: &Vec<CharacterMetadata>, rng: &mut dyn RngCore) -> Self {
+    fn new(metadata: &[CharacterMetadata], rng: &mut dyn RngCore) -> Self {
         let ordering = {
             let mut ordering = (0..metadata.len()).map(SortingIndex).collect::<Vec<_>>();
             ordering.shuffle(rng);
@@ -392,7 +397,7 @@ impl SampleCandidateList {
                         let n_dispute = *all_n_disputes.get(sorting_idx).unwrap_or(&0);
                         base_beta.powi(n_dispute)
                     })
-                    .collect::<Vec<_>>(); // TODO: experiment with Vec vs LinkedList perf
+                    .collect::<Vec<_>>();
 
                 let mut beta_sum: f64 = betas.iter().rev().sum();
 
@@ -476,8 +481,10 @@ impl SampleCandidateList {
     }
 }
 
+/// The main struct of this library.
+/// Contains state and functionality of an in-progress sorting operation.
 #[derive(Debug, Serialize, Deserialize)]
-struct CharacterSortingData {
+pub struct CharacterSortingData {
     #[serde(rename = "m")]
     metadata: Vec<CharacterMetadata>,
 
@@ -506,7 +513,11 @@ struct CharacterSortingData {
     rng: Box<dyn DebugRng>,
 }
 impl CharacterSortingData {
-    fn new(metadata: Vec<CharacterMetadata>, num_candidate_lists: usize) -> Self {
+    /// Constructs new sorting data with the specified character metadata and the specified
+    /// number of candidate lists. The number of candidate lists should be on the order of ~100.
+    /// More candidate lists leads to a more accurate sort, but more memory consumption and possibly
+    /// a larger number of human comparisons needed.
+    pub fn new(metadata: Vec<CharacterMetadata>, num_candidate_lists: usize) -> Self {
         Self::new_with_rng(metadata, num_candidate_lists, default_rng())
     }
 
@@ -533,23 +544,8 @@ impl CharacterSortingData {
         }
     }
 
-    fn save(&self, path: &Option<PathBuf>) -> Result<()> {
-        let Some(path) = path else {
-            return Ok(());
-        };
-
-        serde_json::to_writer_pretty(BufWriter::new(File::create(path)?), self)?;
-
-        let compressed_path = path.with_added_extension("gz");
-
-        let mut encoder = GzEncoder::new(File::create(compressed_path)?, Compression::best());
-        serde_json::to_writer(&mut encoder, self)?;
-        encoder.finish()?;
-
-        Ok(())
-    }
-
-    fn get_metadata(&self, sorting_id: SortingIndex) -> &CharacterMetadata {
+    /// Returns a reference to the character metadata for the specified sorting index.
+    pub fn get_metadata(&self, sorting_id: SortingIndex) -> &CharacterMetadata {
         &self.metadata[sorting_id.0]
     }
 
@@ -563,7 +559,7 @@ impl CharacterSortingData {
     ///
     /// Returns either the final sort order (from the largest group of identical candidates) if sorting is finished,
     /// or None if the sort order is indeterminate.
-    fn get_final_sort_order(&self, epsilon: f64) -> Option<Vec<SortingIndex>> {
+    pub fn get_final_sort_order(&self, epsilon: f64) -> Option<Vec<SortingIndex>> {
         // If we just started, there will be N groups, each containing 1 element.
         // If we are nearly finished, there will be very few groups, with one containing nearly N elements.
         let unique_groups = self.get_unique_candidate_list_groups();
@@ -686,7 +682,7 @@ impl CharacterSortingData {
     /// the least converged matchups.
     ///
     /// There are no guarantees about the order of the returned character IDs.
-    fn get_most_valuable_matchups(
+    pub fn get_most_valuable_matchups(
         &mut self,
         half_num_characters_requested: usize,
     ) -> SmallVec<[SortingIndex; 4]> {
@@ -784,7 +780,7 @@ impl CharacterSortingData {
     // }
 
     /// Records that a new measurement was performed by the user.
-    fn record_new_measurement(&mut self, matchup: &Matchup, outcome: EvaluationOutcome) {
+    pub fn record_new_measurement(&mut self, matchup: &Matchup, outcome: EvaluationOutcome) {
         let max_sorting_index = SortingIndex(self.metadata.len() - 1);
         let matchup_index = matchup.to_index(max_sorting_index);
 
@@ -808,116 +804,27 @@ impl CharacterSortingData {
     }
 }
 
-#[derive(Debug, clap::Args)]
-#[group(required = true, multiple = false)]
-struct InputArgGroup {
-    #[arg(short, long)]
-    metadata_path: Option<PathBuf>,
-    #[arg(short, long)]
-    resume_data_path: Option<PathBuf>,
-}
-
-#[derive(Debug, clap::Parser)]
-#[command(name = "smart_touhou_sorter")]
-#[command(about = "Test harness")]
-struct Cli {
-    #[clap(flatten)]
-    input: InputArgGroup,
-
-    #[arg(short = 's')]
-    save_path: Option<PathBuf>,
-}
-
-fn main() -> Result<()> {
-    let args = Cli::parse();
-
-    let mut sorting_data = if let Some(metadata_path) = args.input.metadata_path {
-        let metadata: Vec<CharacterMetadata> = serde_json::from_reader(BufReader::new(
-            File::open(&metadata_path).with_context(|| {
-                format!(
-                    "failed to open file {} for reading",
-                    metadata_path.display()
-                )
-            })?,
-        ))
-        .with_context(|| {
-            format!(
-                "failed to read or parse metadata file {}",
-                metadata_path.display()
-            )
-        })?;
-
-        println!("Loaded {} characters from metadata file...", metadata.len());
-
-        CharacterSortingData::new(metadata, 10) // TODO: configurable
-    } else if let Some(resume_path) = args.input.resume_data_path {
-        serde_json::from_reader(BufReader::new(File::open(&resume_path)?))?
-    } else {
-        panic!("no inputs");
-    };
-
-    let epsilon = 0.0; // TODO: configurable
-    let result = loop {
-        if let Some(result) = sorting_data.get_final_sort_order(epsilon) {
-            break result;
-        };
-
-        let most_valuable_characters_to_compare = sorting_data.get_most_valuable_matchups(1);
-        println!("Most valuable characters to compare:");
-        for sorting_id in &most_valuable_characters_to_compare {
-            println!(
-                "\t{sorting_id:?}: {}",
-                sorting_data.get_metadata(*sorting_id).display_name
-            );
-        }
-
-        let selected_max = SortingIndex(loop {
-            let mut input = String::new();
-            std::io::stdin().read_line(&mut input)?;
-
-            match input.trim().parse() {
-                Ok(input) => break input,
-                Err(err) => println!("couldn't parse: {err}"),
-            }
-        });
-
-        // assume we always have 2 characters to compare for now
-        let matchup = Matchup::new(
-            most_valuable_characters_to_compare[0],
-            most_valuable_characters_to_compare[1],
-        );
-        let outcome = if selected_max == matchup.a {
-            EvaluationOutcome(1.0)
-        } else {
-            EvaluationOutcome(-1.0)
-        };
-
-        sorting_data.record_new_measurement(&matchup, outcome);
-        sorting_data.save(&args.save_path)?;
-    };
-
-    println!("\nResult: {result:#?}");
-
-    Ok(())
-}
-
 #[cfg(test)]
 mod test {
     use std::sync::LazyLock;
 
-    use rand::SeedableRng;
+    use rand::SeedableRng as _;
     use rand_chacha::ChaCha8Rng;
 
     use crate::{
-        CachedMatchupValue, CharacterMetadata, CharacterSortingData, DebugRng, Matchup,
-        MatchupIndex, SortingIndex,
+        CharacterMetadata, CharacterSortingData, DebugRng, Matchup, MatchupIndex, SortingIndex,
     };
 
     const TEST_CHARACTER_LENGTH: usize = 250;
 
     static TEST_CHARACTERS: LazyLock<Vec<CharacterMetadata>> = LazyLock::new(|| {
         (0..TEST_CHARACTER_LENGTH)
-            .map(|_| CharacterMetadata::default())
+            .map(|_| CharacterMetadata {
+                globally_unique_id: String::default(),
+                display_name: String::default(),
+                image_url: String::default(),
+                tags: Vec::default(),
+            })
             .collect()
     });
 
@@ -927,7 +834,7 @@ mod test {
 
     #[test]
     fn construct_test() {
-        let mut sorting_data =
+        let sorting_data =
             CharacterSortingData::new_with_rng(TEST_CHARACTERS.clone(), 200, get_fixed_seed_rng());
         assert_eq!(sorting_data.get_unique_candidate_list_groups().len(), 200);
         assert!(sorting_data.get_final_sort_order(0.0).is_none());
@@ -935,14 +842,6 @@ mod test {
             sorting_data.get_final_sort_order(1.0).unwrap().len(),
             TEST_CHARACTER_LENGTH
         );
-
-        // dbg!(sorting_data.get_most_valuable_matchups(4));
-        // dbg!(sorting_data.get_most_valuable_matchups(5));
-        // dbg!(sorting_data.get_most_valuable_matchups(6));
-
-        // dbg!(sorting_data.cached_matchup_data.len() * std::mem::size_of::<CachedMatchupValue>());
-
-        // assert!(false);
     }
 
     #[test]

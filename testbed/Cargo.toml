@@ -1,0 +1,11 @@
+[package]
+name = "testbed"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = { workspace = true }
+clap = { workspace = true }
+engine = { path = "../engine" }
+flate2 = { workspace = true }
+serde_json = { workspace = true }
