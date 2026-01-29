@@ -6,6 +6,7 @@
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 
 use jiff::Timestamp;
+use log::info;
 use ordered_float::NotNan;
 use rand::{Rng as _, RngCore, seq::SliceRandom as _};
 use serde::{Deserialize, Serialize};
@@ -13,19 +14,10 @@ use smallvec::{SmallVec, smallvec};
 
 /// Metadata for a character to be sorted.
 #[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(transparent)]
 pub struct CharacterMetadata {
     /// A globally unique ID for the character.
-    #[serde(rename = "g")]
     pub globally_unique_id: String,
-    /// A display name for the character.
-    #[serde(rename = "d")]
-    pub display_name: String,
-    /// A URL for a character's image.
-    #[serde(rename = "u")]
-    pub image_url: String,
-    /// Any tags that apply to this character.
-    #[serde(rename = "t", skip_serializing_if = "Vec::is_empty", default)]
-    pub tags: Vec<String>,
 }
 
 /// Each character is assigned a sorting index when sorting begins. Cheaply copyable.
@@ -170,7 +162,7 @@ fn default_rng() -> Box<dyn DebugRng> {
     Box::new(rand::rng())
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct CachedMatchupValue {
     #[serde(rename = "n")]
     n_ab: u64,
@@ -178,22 +170,21 @@ struct CachedMatchupValue {
     convergence: NotNan<f64>,
 }
 
-// The different strategies we have to sample the probability distribution of possible orderings.
-enum SamplingStrategy<'a> {
-    // This strategy is most effective when the number of measurements is still small.
-    Recursion {
-        comparison_history: &'a ComparisonHistory,
-        max_sorting_index: SortingIndex,
-    },
-    // This strategy's runtime does not depend on the total number of measurements,
-    // but may be slower than the recursion sampler when the number of measurements is small.
-    ByMaxElement {
-        comparison_history: &'a ComparisonHistory,
-        max_sorting_index: SortingIndex,
-    },
+/// The different strategies we have to sample the probability distribution of possible orderings.
+#[derive(Debug, Clone, Copy)]
+pub enum SamplingStrategy {
+    /// This strategy is most effective when the number of measurements is still small.
+    Recursion,
+    /// This strategy's runtime does not depend on the total number of measurements,
+    /// but may be slower than the recursion sampler when the number of measurements is small.
+    ByMaxElement,
+}
+struct ResamplingData<'a> {
+    comparison_history: &'a ComparisonHistory,
+    max_sorting_index: SortingIndex,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 struct SampleCandidateList {
     // Invariant: Each candidate list contains every SortingIndex in the metadata, and no others. This
     // implies that each candidate list has the same length which is equal to metadata.len().
@@ -229,7 +220,11 @@ impl SampleCandidateList {
     fn resample_range(
         &mut self,
         matchup: &Matchup,
-        sampling_strategy: SamplingStrategy<'_>,
+        sampling_strategy: SamplingStrategy,
+        ResamplingData {
+            comparison_history,
+            max_sorting_index,
+        }: ResamplingData<'_>,
         rng: &mut dyn RngCore,
     ) {
         let p = self.get_correct_measurement_probability();
@@ -246,10 +241,7 @@ impl SampleCandidateList {
         };
 
         match sampling_strategy {
-            SamplingStrategy::Recursion {
-                comparison_history,
-                max_sorting_index,
-            } => {
+            SamplingStrategy::Recursion => {
                 fn recursion_helper(
                     slice_to_reorder: &mut [SortingIndex],
                     comparison_history: &ComparisonHistory,
@@ -323,7 +315,7 @@ impl SampleCandidateList {
 
                         iteration += 1;
                         if iteration % 100 == 0 {
-                            println!(
+                            info!(
                                 "iteration {iteration} trying to find an acceptable ordering; next attempt: {left:?} / {right:?}"
                             );
                         }
@@ -358,10 +350,7 @@ impl SampleCandidateList {
                 );
             }
 
-            SamplingStrategy::ByMaxElement {
-                comparison_history,
-                max_sorting_index,
-            } => {
+            SamplingStrategy::ByMaxElement => {
                 // Cache the results of range_to_resample.contains(idx) for all indexes.
                 let range_contains_map = {
                     let mut map = vec![false; max_sorting_index.0 + 1];
@@ -444,6 +433,7 @@ impl SampleCandidateList {
         history_index: usize,
         max_sorting_index: SortingIndex,
         comparison_history: &ComparisonHistory,
+        sampling_strategy: SamplingStrategy,
         rng: &mut dyn RngCore,
     ) {
         let matchup_index = matchup.to_index(max_sorting_index);
@@ -456,20 +446,16 @@ impl SampleCandidateList {
             // We are likely to reject this candidate, in which case part of it needs to be resampled.
             let p = self.get_correct_measurement_probability();
             if !rng.random_bool((1.0 - p) / p) {
-                println!(
-                    "Resampling candidate list: {matchup:?} / {:#?}",
-                    self.ordering
-                );
+                info!("Resampling candidate list: {matchup:?}");
                 self.resample_range(
                     matchup,
-                    // TODO: select sampling strategy dynamically
-                    SamplingStrategy::ByMaxElement {
+                    sampling_strategy,
+                    ResamplingData {
                         comparison_history,
                         max_sorting_index,
                     },
                     rng,
                 );
-                println!("Done resampling: {:#?}", self.ordering);
             }
         }
     }
@@ -512,6 +498,17 @@ pub struct CharacterSortingData {
     #[serde(skip, default = "default_rng")]
     rng: Box<dyn DebugRng>,
 }
+impl Clone for CharacterSortingData {
+    fn clone(&self) -> Self {
+        Self {
+            metadata: self.metadata.clone(),
+            comparison_history: self.comparison_history.clone(),
+            candidate_lists: self.candidate_lists.clone(),
+            cached_matchup_data: self.cached_matchup_data.clone(),
+            rng: default_rng(),
+        }
+    }
+}
 impl CharacterSortingData {
     /// Constructs new sorting data with the specified character metadata and the specified
     /// number of candidate lists. The number of candidate lists should be on the order of ~100.
@@ -547,6 +544,11 @@ impl CharacterSortingData {
     /// Returns a reference to the character metadata for the specified sorting index.
     pub fn get_metadata(&self, sorting_id: SortingIndex) -> &CharacterMetadata {
         &self.metadata[sorting_id.0]
+    }
+
+    /// Copies all character metadata; returned in an unspecified order.
+    pub fn copy_all_metadata(&self) -> Vec<CharacterMetadata> {
+        self.metadata.clone()
     }
 
     /// Determines if sorting is completed.
@@ -637,6 +639,24 @@ impl CharacterSortingData {
         MatchupIndex(n_choose_2 - 1)
     }
 
+    /// Returns a number between 0 and 1 that measures total similarity of the candidate lists.
+    /// A value of 1 indicates that all candidate lists are identical.
+    pub fn estimate_progress(&self) -> f64 {
+        // Strategy: Average across all matchups of (convergence / max_possible_convergence).
+        // Since convergence approaches the max when more lists agree with that matchup, as more lists
+        // have the same position on a matchup, that value will approach 1.0. And since convergence
+        // approaches 0 as more lists are evenly split on a matchup, that value will approach 0.0.
+
+        let max_possible_convergence = (self.candidate_lists.len() as f64).powi(2);
+        let sum: f64 = self
+            .cached_matchup_data
+            .iter()
+            .map(|data| data.convergence / max_possible_convergence)
+            .sum();
+
+        sum / (self.cached_matchup_data.len() as f64)
+    }
+
     /// Convergence is defined as `(N_ab - N_ba)^2`, where `N_ab` is the number of candidate lists
     /// in which a occurs before b, and `N_ba` is the number of candidate lists in which b occurs before a.
     ///
@@ -682,9 +702,14 @@ impl CharacterSortingData {
     /// the least converged matchups.
     ///
     /// There are no guarantees about the order of the returned character IDs.
+    ///
+    /// If `exclude_indices` is specifed, then none of those indexes will be included
+    /// in the results. This may be used to ensure that the same results aren't retuned
+    /// multiple times if this is run near convergence.
     pub fn get_most_valuable_matchups(
         &mut self,
         half_num_characters_requested: usize,
+        exclude_indices: Option<SmallVec<[SortingIndex; 4]>>,
     ) -> SmallVec<[SortingIndex; 4]> {
         // TODO: optimize using the algorithm in the appendix - only consider matchups between characters
         // that are adjacent in one or more candidate lists.
@@ -693,22 +718,45 @@ impl CharacterSortingData {
 
         // We have to mutate (sort) the matchup cache, so we have to copy it.
         // This is much cheaper than recalculating all the convergences though.
-        let mut certainty_list: Vec<_> = self
-            .cached_matchup_data
-            .iter()
-            .enumerate()
-            .map(|(index, CachedMatchupValue { convergence, .. })| {
-                (*convergence, MatchupIndex(index))
-            })
-            .collect();
-
-        for candidate in &self.candidate_lists {
-            println!("Candidate: {:?}", candidate.ordering);
-        }
-        for (convergence, index) in &certainty_list {
-            let matchup = Matchup::from_index(*index, max_sorting_index);
-            println!("Convergence: {matchup:?} = {convergence}");
-        }
+        // This is the point at which we apply the exclusions.
+        let mut certainty_list: Vec<_> = match exclude_indices {
+            Some(exclusions) if exclusions.len() > 10 => {
+                let exclusions: BTreeSet<SortingIndex> = exclusions.into_iter().collect();
+                self.cached_matchup_data
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(index, CachedMatchupValue { convergence, .. })| {
+                        let matchup = Matchup::from_index(MatchupIndex(index), max_sorting_index);
+                        if exclusions.contains(&matchup.a) || exclusions.contains(&matchup.b) {
+                            None
+                        } else {
+                            Some((*convergence, MatchupIndex(index)))
+                        }
+                    })
+                    .collect()
+            }
+            Some(exclusions) => self
+                .cached_matchup_data
+                .iter()
+                .enumerate()
+                .filter_map(|(index, CachedMatchupValue { convergence, .. })| {
+                    let matchup = Matchup::from_index(MatchupIndex(index), max_sorting_index);
+                    if exclusions.contains(&matchup.a) || exclusions.contains(&matchup.b) {
+                        None
+                    } else {
+                        Some((*convergence, MatchupIndex(index)))
+                    }
+                })
+                .collect(),
+            None => self
+                .cached_matchup_data
+                .iter()
+                .enumerate()
+                .map(|(index, CachedMatchupValue { convergence, .. })| {
+                    (*convergence, MatchupIndex(index))
+                })
+                .collect(),
+        };
 
         // We don't need to fully sort the list, we just need to find the smallest N matchups in any order.
         let (unsorted_lower_selected_matchups, _, _) = certainty_list
@@ -780,7 +828,12 @@ impl CharacterSortingData {
     // }
 
     /// Records that a new measurement was performed by the user.
-    pub fn record_new_measurement(&mut self, matchup: &Matchup, outcome: EvaluationOutcome) {
+    pub fn record_new_measurement(
+        &mut self,
+        matchup: &Matchup,
+        outcome: EvaluationOutcome,
+        resampling_strategy: SamplingStrategy,
+    ) {
         let max_sorting_index = SortingIndex(self.metadata.len() - 1);
         let matchup_index = matchup.to_index(max_sorting_index);
 
@@ -795,6 +848,7 @@ impl CharacterSortingData {
                 history_index,
                 max_sorting_index,
                 &self.comparison_history,
+                resampling_strategy,
                 &mut self.rng,
             );
         }
@@ -821,9 +875,6 @@ mod test {
         (0..TEST_CHARACTER_LENGTH)
             .map(|_| CharacterMetadata {
                 globally_unique_id: String::default(),
-                display_name: String::default(),
-                image_url: String::default(),
-                tags: Vec::default(),
             })
             .collect()
     });

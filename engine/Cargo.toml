@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 getrandom = { workspace = true, optional = true }
 jiff = { workspace = true }
+log = { workspace = true }
 ordered-float = { workspace = true }
 rand = { workspace = true }
 serde = { workspace = true }
