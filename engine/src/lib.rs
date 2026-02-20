@@ -5,10 +5,13 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 
-use jiff::Timestamp;
+use jiff::{SpanRelativeTo, Timestamp, ToSpan as _, Unit};
 use log::info;
 use ordered_float::NotNan;
-use rand::{Rng as _, RngCore, seq::SliceRandom as _};
+use rand::{
+    Rng as _, RngCore,
+    seq::SliceRandom as _,
+};
 use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
 
@@ -152,9 +155,20 @@ struct CandidateListIndex(usize);
 // A group of identical candidate lists.
 type CandidateListGroup = SmallVec<[CandidateListIndex; 2]>;
 
-// Maps from matchup to evaluation, and the time at which the evaluation occurred.
-// This BTreeMap is basically used as a sparse vec.
-type ComparisonHistory = BTreeMap<MatchupIndex, Vec<(Timestamp, EvaluationOutcome)>>;
+#[derive(Debug, Default, Clone, Serialize, Deserialize)]
+#[serde(transparent)]
+struct ComparisonHistory {
+    // This BTreeMap is basically used as a sparse vec.
+    log: BTreeMap<MatchupIndex, Vec<(Timestamp, EvaluationOutcome)>>,
+}
+impl ComparisonHistory {
+    pub fn record_measurement(&mut self, matchup_index: MatchupIndex, outcome: EvaluationOutcome) {
+        self.log
+            .entry(matchup_index)
+            .or_default()
+            .push((Timestamp::now(), outcome));
+    }
+}
 
 trait DebugRng: RngCore + std::fmt::Debug {}
 impl<T> DebugRng for T where T: RngCore + std::fmt::Debug {}
@@ -170,15 +184,6 @@ struct CachedMatchupValue {
     convergence: NotNan<f64>,
 }
 
-/// The different strategies we have to sample the probability distribution of possible orderings.
-#[derive(Debug, Clone, Copy)]
-pub enum SamplingStrategy {
-    /// This strategy is most effective when the number of measurements is still small.
-    Recursion,
-    /// This strategy's runtime does not depend on the total number of measurements,
-    /// but may be slower than the recursion sampler when the number of measurements is small.
-    ByMaxElement,
-}
 struct ResamplingData<'a> {
     comparison_history: &'a ComparisonHistory,
     max_sorting_index: SortingIndex,
@@ -190,9 +195,6 @@ struct SampleCandidateList {
     // implies that each candidate list has the same length which is equal to metadata.len().
     #[serde(rename = "o")]
     ordering: Vec<SortingIndex>,
-
-    #[serde(rename = "h")]
-    comparisons_seen: BTreeSet<(MatchupIndex, usize)>,
 
     #[serde(rename = "m")]
     matching_comparisons_seen: usize,
@@ -207,8 +209,70 @@ impl SampleCandidateList {
 
         Self {
             ordering,
-            comparisons_seen: BTreeSet::new(),
             matching_comparisons_seen: 0,
+        }
+    }
+
+    /// Finds the number of times that each element has been measured to be smaller than some other element.
+    /// If an element has never been measured less than another element, it won't be present in the result.
+    pub fn get_all_n_disputes(
+        now: Option<Timestamp>,
+        max_sorting_index: SortingIndex,
+        comparison_history: &ComparisonHistory,
+        indexes_to_include: &[bool],
+    ) -> BTreeMap<SortingIndex, f64> {
+        let mut result = BTreeMap::new();
+
+        for (matchup_index, log) in &comparison_history.log {
+            let matchup = Matchup::from_index(*matchup_index, max_sorting_index);
+
+            if indexes_to_include[matchup.a.0] && indexes_to_include[matchup.b.0] {
+                for (eval_time, eval) in log {
+                    let outcome = Self::apply_decay(now, eval, *eval_time);
+                    if outcome.is_sign_positive() {
+                        *result.entry(matchup.a).or_default() += outcome;
+                    } else {
+                        *result.entry(matchup.b).or_default() += outcome;
+                    }
+                }
+            }
+        }
+
+        result
+    }
+
+    #[inline]
+    fn apply_decay(now: Option<Timestamp>, eval: &EvaluationOutcome, eval_time: Timestamp) -> f64 {
+        if let Some(now) = now {
+            let seconds_older_than_one_week = (now - eval_time)
+                .checked_sub((7.days(), SpanRelativeTo::days_are_24_hours()))
+                .unwrap()
+                .total((Unit::Second, SpanRelativeTo::days_are_24_hours()))
+                .unwrap()
+                .max(0.0);
+
+            // Decay is calculated on a sigmoid curve, and in particular a logistic function:
+            // decay(age) = L / (1 + e^(-k * (age - age_midpoint)))
+            // L is the carrying capacity, the upper bound of the curve; in our case it is 1.0;
+            // k affects the steepness of the curve;
+            // and age_midpoint is the age at which we want the decay to equal 0.5L = 0.5.
+
+            // We configure age_midpoint to be half a year (calculated using hours to avoid ambiguity
+            // in the length of a day):
+            let age_midpoint = (365 * 24 / 2).hours().total(Unit::Second).unwrap();
+
+            // k is determined by just checking a bunch of values to find one that produces a nice-looking graph
+            // on the scale of the number of seconds in a year.
+            const K: f64 = 0.000_000_2;
+
+            let logistic_denominator_exponent = -K * (seconds_older_than_one_week - age_midpoint);
+            let logistic_denominator = 1.0 + logistic_denominator_exponent.exp();
+            let logistic_result = 1.0 / logistic_denominator;
+
+            // The logistic function we calculated varies from 0 to 1, so we subtract it from 1 to get what we need.
+            eval.0 * (1.0 - logistic_result)
+        } else {
+            eval.0
         }
     }
 
@@ -220,7 +284,6 @@ impl SampleCandidateList {
     fn resample_range(
         &mut self,
         matchup: &Matchup,
-        sampling_strategy: SamplingStrategy,
         ResamplingData {
             comparison_history,
             max_sorting_index,
@@ -240,175 +303,67 @@ impl SampleCandidateList {
             }
         };
 
-        match sampling_strategy {
-            SamplingStrategy::Recursion => {
-                fn recursion_helper(
-                    slice_to_reorder: &mut [SortingIndex],
-                    comparison_history: &ComparisonHistory,
-                    comparisons_seen: &BTreeSet<(MatchupIndex, usize)>,
-                    correctness_probability: f64,
-                    max_sorting_index: SortingIndex,
-                    rng: &mut dyn RngCore,
-                ) {
-                    if slice_to_reorder.len() <= 1 {
-                        return;
-                    }
-
-                    // Within this slice, we randomly assign half the elements to the first half
-                    // and half to the second half, then accept the partition with probability:
-                    //      ((1-p)/p)^(n_dispute), where:
-                    //          n_dispute is the number of measurements seen by this sample that do not match this partition, and
-                    //          p is the error probability
-                    let base_probability =
-                        (1.0 - correctness_probability) / correctness_probability;
-                    debug_assert!(base_probability <= 1.0, "{base_probability}");
-
-                    slice_to_reorder.shuffle(rng);
-                    let (mut left, mut right) =
-                        slice_to_reorder.split_at_mut(slice_to_reorder.len() / 2);
-
-                    let mut iteration = 0;
-                    loop {
-                        let n_dispute = comparisons_seen
-                            .iter()
-                            .filter(|(matchup_index, measurement_index)| {
-                                let matchup =
-                                    Matchup::from_index(*matchup_index, max_sorting_index);
-
-                                let (_, evaluation_outcome) = comparison_history
-                                    .get(matchup_index)
-                                    .unwrap()
-                                    .get(*measurement_index)
-                                    .unwrap();
-
-                                let left_contains_a = left.contains(&matchup.a);
-                                let left_contains_b = left.contains(&matchup.b);
-                                let right_contains_a = !left_contains_a;
-                                let right_contains_b = !left_contains_b;
-
-                                let a_before_b = evaluation_outcome.0.is_sign_positive();
-                                let b_before_a = !a_before_b;
-
-                                if a_before_b && left_contains_b && right_contains_a {
-                                    // this measurement disputes this partitioning
-                                    return true;
-                                }
-
-                                if b_before_a && left_contains_a && right_contains_b {
-                                    // this measurement disputes this partitioning
-                                    return true;
-                                }
-
-                                // no dispute
-                                false
-                            })
-                            .count() as i32;
-
-                        // if n_dispute is 0, then the probability should be 1
-                        if rng.random_bool(base_probability.powi(n_dispute)) {
-                            break;
-                        } else {
-                            slice_to_reorder.shuffle(rng);
-                            (left, right) =
-                                slice_to_reorder.split_at_mut(slice_to_reorder.len() / 2);
-                        }
-
-                        iteration += 1;
-                        if iteration % 100 == 0 {
-                            info!(
-                                "iteration {iteration} trying to find an acceptable ordering; next attempt: {left:?} / {right:?}"
-                            );
-                        }
-                    }
-
-                    // Finally, we recurse on each of the two partitions.
-                    recursion_helper(
-                        left,
-                        comparison_history,
-                        comparisons_seen,
-                        correctness_probability,
-                        max_sorting_index,
-                        rng,
-                    );
-                    recursion_helper(
-                        right,
-                        comparison_history,
-                        comparisons_seen,
-                        correctness_probability,
-                        max_sorting_index,
-                        rng,
-                    );
-                }
-
-                recursion_helper(
-                    range_to_resample,
-                    comparison_history,
-                    &self.comparisons_seen,
-                    p,
-                    max_sorting_index,
-                    rng,
-                );
+        // Cache the results of range_to_resample.contains(idx) for all indexes.
+        let range_contains_map = {
+            let mut map = vec![false; max_sorting_index.0 + 1];
+            for sorting_idx in range_to_resample.iter() {
+                map[sorting_idx.0] = true;
             }
+            map
+        };
 
-            SamplingStrategy::ByMaxElement => {
-                // Cache the results of range_to_resample.contains(idx) for all indexes.
-                let range_contains_map = {
-                    let mut map = vec![false; max_sorting_index.0 + 1];
-                    for sorting_idx in range_to_resample.iter() {
-                        map[sorting_idx.0] = true;
-                    }
-                    map
-                };
+        // We sample the distribution by repeatedly finding the maximum element
+        // out of all the unselected elements. So, for each element, we need to know
+        // its n_dispute, the number of times it has been measured to be smaller than
+        // some other element.
+        let all_n_disputes = Self::get_all_n_disputes(
+            None,
+            max_sorting_index,
+            &comparison_history,
+            &range_contains_map,
+        );
+        // for (matchup_index, comparison_history) in &comparison_history.log {
+        //     let matchup = Matchup::from_index(*matchup_index, max_sorting_index);
 
-                // We sample the distribution by repeatedly finding the maximum element
-                // out of all the unselected elements. So, for each element, we need to know
-                // its n_dispute, the number of times it has been measured to be smaller than
-                // some other element.
-                let mut all_n_disputes = BTreeMap::<SortingIndex, i32>::new();
-                for (matchup_index, comparison_history) in comparison_history {
-                    let matchup = Matchup::from_index(*matchup_index, max_sorting_index);
+        //     if range_contains_map[matchup.a.0] && range_contains_map[matchup.b.0] {
+        //         for (_, comparison) in comparison_history {
+        //             if comparison.0.is_sign_positive() {
+        //                 *all_n_disputes.entry(matchup.a).or_default() += comparison.0;
+        //             } else {
+        //                 *all_n_disputes.entry(matchup.b).or_default() += comparison.0;
+        //             }
+        //         }
+        //     }
+        // }
 
-                    if range_contains_map[matchup.a.0] && range_contains_map[matchup.b.0] {
-                        for (_, comparison) in comparison_history {
-                            if comparison.0.is_sign_positive() {
-                                *all_n_disputes.entry(matchup.a).or_default() += 1;
-                            } else {
-                                *all_n_disputes.entry(matchup.b).or_default() += 1;
-                            }
-                        }
-                    }
-                }
+        let base_beta = (1.0 - p) / p;
+        let mut betas = range_to_resample
+            .iter()
+            .map(|sorting_idx| {
+                let n_dispute = *all_n_disputes.get(sorting_idx).unwrap_or(&0.0);
+                base_beta.powf(n_dispute)
+            })
+            .collect::<Vec<_>>();
 
-                let base_beta = (1.0 - p) / p;
-                let mut betas = range_to_resample
-                    .iter()
-                    .map(|sorting_idx| {
-                        let n_dispute = *all_n_disputes.get(sorting_idx).unwrap_or(&0);
-                        base_beta.powi(n_dispute)
-                    })
-                    .collect::<Vec<_>>();
+        let mut beta_sum: f64 = betas.iter().rev().sum();
 
-                let mut beta_sum: f64 = betas.iter().rev().sum();
+        while !range_to_resample.is_empty() {
+            // Note: f64's standard uniform distribution is [0, 1)
+            let threshold = rng.random::<f64>();
 
-                while !range_to_resample.is_empty() {
-                    // Note: f64's standard uniform distribution is [0, 1)
-                    let threshold = rng.random::<f64>();
+            let mut total_beta_value = 0.0;
+            'find_next_max: for i in 0..betas.len() {
+                total_beta_value += betas[i] / beta_sum;
+                if total_beta_value >= threshold {
+                    // We accept the new sample as the largest
+                    let max_len = range_to_resample.len() - 1;
 
-                    let mut total_beta_value = 0.0;
-                    'find_next_max: for i in 0..betas.len() {
-                        total_beta_value += betas[i] / beta_sum;
-                        if total_beta_value >= threshold {
-                            // We accept the new sample as the largest
-                            let max_len = range_to_resample.len() - 1;
+                    beta_sum -= betas[i];
+                    range_to_resample.swap(i, max_len);
+                    betas.swap(i, max_len);
 
-                            beta_sum -= betas[i];
-                            range_to_resample.swap(i, max_len);
-                            betas.swap(i, max_len);
-
-                            (_, range_to_resample) = range_to_resample.split_last_mut().unwrap();
-                            break 'find_next_max;
-                        }
-                    }
+                    (_, range_to_resample) = range_to_resample.split_last_mut().unwrap();
+                    break 'find_next_max;
                 }
             }
         }
@@ -430,15 +385,10 @@ impl SampleCandidateList {
         &mut self,
         matchup: &Matchup,
         outcome: EvaluationOutcome,
-        history_index: usize,
         max_sorting_index: SortingIndex,
         comparison_history: &ComparisonHistory,
-        sampling_strategy: SamplingStrategy,
         rng: &mut dyn RngCore,
     ) {
-        let matchup_index = matchup.to_index(max_sorting_index);
-
-        self.comparisons_seen.insert((matchup_index, history_index));
         let agrees = self.agrees_with(matchup, outcome);
         if agrees {
             self.matching_comparisons_seen += 1;
@@ -449,7 +399,6 @@ impl SampleCandidateList {
                 info!("Resampling candidate list: {matchup:?}");
                 self.resample_range(
                     matchup,
-                    sampling_strategy,
                     ResamplingData {
                         comparison_history,
                         max_sorting_index,
@@ -534,7 +483,7 @@ impl CharacterSortingData {
 
         Self {
             metadata,
-            comparison_history: BTreeMap::default(),
+            comparison_history: Default::default(),
             candidate_lists,
             cached_matchup_data,
             rng,
@@ -828,27 +777,19 @@ impl CharacterSortingData {
     // }
 
     /// Records that a new measurement was performed by the user.
-    pub fn record_new_measurement(
-        &mut self,
-        matchup: &Matchup,
-        outcome: EvaluationOutcome,
-        resampling_strategy: SamplingStrategy,
-    ) {
+    pub fn record_new_measurement(&mut self, matchup: &Matchup, outcome: EvaluationOutcome) {
         let max_sorting_index = SortingIndex(self.metadata.len() - 1);
         let matchup_index = matchup.to_index(max_sorting_index);
 
-        let entry = self.comparison_history.entry(matchup_index).or_default();
-        entry.push((Timestamp::now(), outcome));
-        let history_index = entry.len() - 1;
+        self.comparison_history
+            .record_measurement(matchup_index, outcome);
 
         for sample in self.candidate_lists.iter_mut() {
             sample.update(
                 matchup,
                 outcome,
-                history_index,
                 max_sorting_index,
                 &self.comparison_history,
-                resampling_strategy,
                 &mut self.rng,
             );
         }

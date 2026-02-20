@@ -1,0 +1,2070 @@
+[
+  {
+    "g": "ce315c9e-ad55-46de-8117-8595aad15e3f_hakurei_reimu",
+    "d": "Hakurei Reimu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/c5DqpgX.png",
+    "t": [
+      "book",
+      "EoSD",
+      "PCB",
+      "IaMP",
+      "IN",
+      "PoFV",
+      "StB",
+      "SWR",
+      "MoF",
+      "SA",
+      "UFO",
+      "soku",
+      "DS",
+      "TD",
+      "HM",
+      "DDC",
+      "ISC",
+      "ULiL",
+      "LoLK",
+      "AoCF",
+      "HSiFS",
+      "VD",
+      "WBaWC",
+      "UM",
+      "17.5",
+      "100BM",
+      "UDoALG",
+      "FW",
+      "st4"
+    ]
+  },
+  {
+    "g": "627ff6bf-4abd-4222-bfc0-cc78e890bd19_kirisame_marisa",
+    "d": "Kirisame Marisa",
+    "u": "https://tohosort.frelia.my/src/assets/chars/tJnkSzK.png",
+    "t": [
+      "book",
+      "EoSD",
+      "PCB",
+      "IaMP",
+      "IN",
+      "PoFV",
+      "StB",
+      "SWR",
+      "MoF",
+      "SA",
+      "UFO",
+      "soku",
+      "DS",
+      "GFW",
+      "TD",
+      "HM",
+      "DDC",
+      "ISC",
+      "ULiL",
+      "LoLK",
+      "AoCF",
+      "HSiFS",
+      "VD",
+      "WBaWC",
+      "UM",
+      "17.5",
+      "100BM",
+      "UDoALG",
+      "FW",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "f2c0a292-c5f1-46d9-b6c4-e5693d14df5c_rumia",
+    "d": "Rumia",
+    "u": "https://tohosort.frelia.my/src/assets/chars/0YT7QlS.png",
+    "t": [
+      "book",
+      "EoSD",
+      "StB",
+      "HM",
+      "st1"
+    ]
+  },
+  {
+    "g": "1e22f3d4-ee3b-494e-aa55-b853f32d8bec_daiyousei",
+    "d": "Daiyousei",
+    "u": "https://tohosort.frelia.my/src/assets/chars/NWlZud3.png",
+    "t": [
+      "book",
+      "EoSD",
+      "st2",
+      "ex"
+    ]
+  },
+  {
+    "g": "60c33444-f576-4cb8-bd84-56e44917b938_cirno",
+    "d": "Cirno",
+    "u": "https://tohosort.frelia.my/src/assets/chars/qdveFSy.png",
+    "t": [
+      "book",
+      "EoSD",
+      "PCB",
+      "PoFV",
+      "StB",
+      "soku",
+      "GFW",
+      "HM",
+      "DDC",
+      "ISC",
+      "HSiFS",
+      "100BM",
+      "st2"
+    ]
+  },
+  {
+    "g": "e6934238-4486-459f-8c11-f5ff690b0814_hong_meiling",
+    "d": "Hong Meiling",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ptGp0x4.png",
+    "t": [
+      "book",
+      "EoSD",
+      "IaMP",
+      "StB",
+      "soku",
+      "st3"
+    ]
+  },
+  {
+    "g": "e9dda992-cb65-4aa4-8c74-6e2916b108bd_koakuma",
+    "d": "Koakuma",
+    "u": "https://tohosort.frelia.my/src/assets/chars/vBKdDm4.png",
+    "t": [
+      "book",
+      "EoSD",
+      "st4"
+    ]
+  },
+  {
+    "g": "390ccb01-c367-4b9d-a23f-1e2236878717_patchouli_knowledge",
+    "d": "Patchouli Knowledge",
+    "u": "https://tohosort.frelia.my/src/assets/chars/A7ZnuHo.png",
+    "t": [
+      "book",
+      "EoSD",
+      "IaMP",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "047414c4-514e-491a-b35f-f7d42a48bbb2_izayoi_sakuya",
+    "d": "Izayoi Sakuya",
+    "u": "https://tohosort.frelia.my/src/assets/chars/sgZPf11.png",
+    "t": [
+      "book",
+      "EoSD",
+      "PCB",
+      "IaMP",
+      "IN",
+      "PoFV",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "DDC",
+      "ISC",
+      "UM",
+      "100BM",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "0ee863b2-b94b-4ed9-ae39-1d3ac7e46fdc_remilia_scarlet",
+    "d": "Remilia Scarlet",
+    "u": "https://tohosort.frelia.my/src/assets/chars/8UX7hKE.png",
+    "t": [
+      "book",
+      "EoSD",
+      "IaMP",
+      "IN",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "ISC",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "dc1e204c-109f-4ab6-807c-525a970c401a_flandre_scarlet",
+    "d": "Flandre Scarlet",
+    "u": "https://tohosort.frelia.my/src/assets/chars/OhaDcnc.png",
+    "t": [
+      "book",
+      "EoSD",
+      "StB",
+      "VD",
+      "17.5",
+      "ex"
+    ]
+  },
+  {
+    "g": "df604ace-469b-42a1-8ad7-16334706eef7_letty_whiterock",
+    "d": "Letty Whiterock",
+    "u": "https://tohosort.frelia.my/src/assets/chars/MgzqjFK.png",
+    "t": [
+      "book",
+      "PCB",
+      "StB",
+      "HM",
+      "st1"
+    ]
+  },
+  {
+    "g": "9b33b10c-e61b-412c-8210-3265a137bee1_chen",
+    "d": "Chen",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ohmetZh.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "st2",
+      "ex"
+    ]
+  },
+  {
+    "g": "aa91d4c8-6425-4870-8c36-fccc0f3c57c9_alice_margatroid",
+    "d": "Alice Margatroid",
+    "u": "https://tohosort.frelia.my/src/assets/chars/aDIf0pN.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "IN",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "st3"
+    ]
+  },
+  {
+    "g": "a03b6938-fbe4-4ed7-902f-95ef6cc5f430_lily_white",
+    "d": "Lily White",
+    "u": "https://tohosort.frelia.my/src/assets/chars/2Pr8b2N.png",
+    "t": [
+      "book",
+      "PCB",
+      "PoFV",
+      "HM",
+      "HSiFS",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "714fdf11-d7c3-41b2-8162-4cdddcd30460_lunasa_prismriver",
+    "d": "Lunasa Prismriver",
+    "u": "https://tohosort.frelia.my/src/assets/chars/htOMdDQ.png",
+    "t": [
+      "book",
+      "PCB",
+      "PoFV",
+      "HM",
+      "AoCF",
+      "st4"
+    ]
+  },
+  {
+    "g": "a730bb4c-f952-4447-a5c7-6bbe8fba8c87_merlin_prismriver",
+    "d": "Merlin Prismriver",
+    "u": "https://tohosort.frelia.my/src/assets/chars/PrRPujP.png",
+    "t": [
+      "book",
+      "PCB",
+      "PoFV",
+      "HM",
+      "AoCF",
+      "st4"
+    ]
+  },
+  {
+    "g": "0bbc1aaf-5de4-4ab7-81eb-7c8d018a99f7_lyrica_prismriver",
+    "d": "Lyrica Prismriver",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ze79bFC.png",
+    "t": [
+      "book",
+      "PCB",
+      "PoFV",
+      "HM",
+      "AoCF",
+      "st4"
+    ]
+  },
+  {
+    "g": "56dc9986-a03e-45e6-85d0-25ba3d92069e_konpaku_youmu",
+    "d": "Konpaku Youmu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/WMjyRLJ.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "IN",
+      "PoFV",
+      "StB",
+      "SWR",
+      "soku",
+      "TD",
+      "HM",
+      "ISC",
+      "WBaWC",
+      "100BM",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "71c72588-c47a-482e-b2f1-d532c28c6d48_saigyouji_yuyuko",
+    "d": "Saigyouji Yuyuko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/VT9mTGb.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "IN",
+      "StB",
+      "SWR",
+      "soku",
+      "TD",
+      "HM",
+      "ISC",
+      "VD",
+      "st1",
+      "st6"
+    ]
+  },
+  {
+    "g": "7b8bf5cc-9cbd-406d-bed6-2222abc94c97_yakumo_ran",
+    "d": "Yakumo Ran",
+    "u": "https://tohosort.frelia.my/src/assets/chars/rshnJPV.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "IN",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "VD",
+      "UDoALG",
+      "ex"
+    ]
+  },
+  {
+    "g": "7b1f2ef2-9700-4056-b585-5687506c903c_yakumo_yukari",
+    "d": "Yakumo Yukari",
+    "u": "https://tohosort.frelia.my/src/assets/chars/qsceD4I.png",
+    "t": [
+      "book",
+      "PCB",
+      "IaMP",
+      "IN",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "ISC",
+      "AoCF",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "ce7fa117-5779-4d43-a0ca-9de968cec557_ibuki_suika",
+    "d": "Ibuki Suika",
+    "u": "https://tohosort.frelia.my/src/assets/chars/pLdMjQ3.png",
+    "t": [
+      "book",
+      "IaMP",
+      "StB",
+      "SWR",
+      "soku",
+      "DS",
+      "HM",
+      "ISC",
+      "VD",
+      "100BM",
+      "UDoALG",
+      "st6"
+    ]
+  },
+  {
+    "g": "18772a15-eb8a-4f8f-9bca-0c80e9775dc2_wriggle_nightbug",
+    "d": "Wriggle Nightbug",
+    "u": "https://tohosort.frelia.my/src/assets/chars/8DLUAPf.png",
+    "t": [
+      "book",
+      "IN",
+      "StB",
+      "HM",
+      "st1"
+    ]
+  },
+  {
+    "g": "7e54e355-b8ce-454a-bdd2-db8f6f5c5a8e_mystia_lorelei",
+    "d": "Mystia Lorelei",
+    "u": "https://tohosort.frelia.my/src/assets/chars/6KyhLqE.png",
+    "t": [
+      "book",
+      "IN",
+      "PoFV",
+      "StB",
+      "HM",
+      "st2"
+    ]
+  },
+  {
+    "g": "6bdeaff8-0449-4f55-9a38-369de228614e_kamishirasawa_keine",
+    "d": "Kamishirasawa Keine",
+    "u": "https://tohosort.frelia.my/src/assets/chars/99w0Chm.png",
+    "t": [
+      "book",
+      "IN",
+      "StB",
+      "HM",
+      "ISC",
+      "st3",
+      "ex"
+    ]
+  },
+  {
+    "g": "bb48e9c5-06fa-4cd3-8336-6b67cca71939_inaba_tewi",
+    "d": "Inaba Tewi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/yqNfNje.png",
+    "t": [
+      "book",
+      "IN",
+      "PoFV",
+      "StB",
+      "HM",
+      "st5"
+    ]
+  },
+  {
+    "g": "965df49c-7b20-4fc1-b737-11a51ef70458_reisen_udongein inaba",
+    "d": "Reisen Udongein Inaba",
+    "u": "https://tohosort.frelia.my/src/assets/chars/PrYzRcC.png",
+    "t": [
+      "book",
+      "IN",
+      "PoFV",
+      "StB",
+      "soku",
+      "HM",
+      "LoLK",
+      "AoCF",
+      "st5"
+    ]
+  },
+  {
+    "g": "d0925a26-d6ea-4a1d-9138-fcb5e3f48d77_yagokoro_eirin",
+    "d": "Yagokoro Eirin",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ceo4DhK.png",
+    "t": [
+      "book",
+      "IN",
+      "StB",
+      "HM",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "d6326c4f-8dbe-4a21-8bd4-4e1b5aabe457_houraisan_kaguya",
+    "d": "Houraisan Kaguya",
+    "u": "https://tohosort.frelia.my/src/assets/chars/2YDuTk3.png",
+    "t": [
+      "book",
+      "IN",
+      "StB",
+      "HM",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "fee0edc3-6813-4f7f-a573-c3966576f09f_fujiwara_no mokou",
+    "d": "Fujiwara no Mokou",
+    "u": "https://tohosort.frelia.my/src/assets/chars/3zo4VKV.png",
+    "t": [
+      "book",
+      "IN",
+      "StB",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "8260d2ba-0cc8-4455-8975-a667cce80da3_shameimaru_aya",
+    "d": "Shameimaru Aya",
+    "u": "https://tohosort.frelia.my/src/assets/chars/8TLXMST.png",
+    "t": [
+      "book",
+      "PoFV",
+      "StB",
+      "SWR",
+      "MoF",
+      "soku",
+      "HM",
+      "ISC",
+      "HSiFS",
+      "st4"
+    ]
+  },
+  {
+    "g": "854a5855-d276-42a1-a6bd-37d78af1d833_medicine_melancholy",
+    "d": "Medicine Melancholy",
+    "u": "https://tohosort.frelia.my/src/assets/chars/IImsp7K.png",
+    "t": [
+      "book",
+      "PoFV",
+      "StB",
+      "HM",
+      "st4"
+    ]
+  },
+  {
+    "g": "1e821bd0-5f05-4c41-92bb-51d3c0aca46c_kazami_yuuka",
+    "d": "Kazami Yuuka",
+    "u": "https://tohosort.frelia.my/src/assets/chars/MZXJQq5.png",
+    "t": [
+      "book",
+      "PoFV",
+      "StB",
+      "HM",
+      "st5"
+    ]
+  },
+  {
+    "g": "c1c67a9b-5b0c-4945-bbca-a94daa626146_onozuka_komachi",
+    "d": "Onozuka Komachi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/aX4WIH8.png",
+    "t": [
+      "book",
+      "PoFV",
+      "StB",
+      "SWR",
+      "soku",
+      "HM",
+      "100BM",
+      "st5"
+    ]
+  },
+  {
+    "g": "5bb57afe-c462-441a-8ab4-9ab069cf9c1f_shiki_eiki, yamaxanadu",
+    "d": "Shiki Eiki, Yamaxanadu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/nPBvatH.png",
+    "t": [
+      "book",
+      "PoFV",
+      "StB",
+      "HM",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "542b8600-921a-448b-b2e7-88bfc0330192_aki_shizuha",
+    "d": "Aki Shizuha",
+    "u": "https://tohosort.frelia.my/src/assets/chars/3pDRgvR.png",
+    "t": [
+      "MoF",
+      "DS",
+      "HM",
+      "st1"
+    ]
+  },
+  {
+    "g": "021e5714-0be4-48b4-a0eb-263ab9fea80c_aki_minoriko",
+    "d": "Aki Minoriko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/bV0DaN7.png",
+    "t": [
+      "MoF",
+      "DS",
+      "HM",
+      "100BM",
+      "st1"
+    ]
+  },
+  {
+    "g": "948c05cf-9ccd-4db0-9569-baa5ea675e8f_kagiyama_hina",
+    "d": "Kagiyama Hina",
+    "u": "https://tohosort.frelia.my/src/assets/chars/J11NjNj.png",
+    "t": [
+      "MoF",
+      "DS",
+      "HM",
+      "st2"
+    ]
+  },
+  {
+    "g": "0a12c046-dcf4-4676-91f9-dacf9e003996_kawashiro_nitori",
+    "d": "Kawashiro Nitori",
+    "u": "https://tohosort.frelia.my/src/assets/chars/4Ufced2.png",
+    "t": [
+      "MoF",
+      "DS",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "100BM",
+      "st3"
+    ]
+  },
+  {
+    "g": "45436f77-5e74-45b1-a8fd-b6f5f940138f_inubashiri_momiji",
+    "d": "Inubashiri Momiji",
+    "u": "https://tohosort.frelia.my/src/assets/chars/qGMjnYk.png",
+    "t": [
+      "MoF",
+      "DS",
+      "ISC",
+      "st4"
+    ]
+  },
+  {
+    "g": "965d1adb-a883-4754-874f-613aa8ce596c_kochiya_sanae",
+    "d": "Kochiya Sanae",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ATTRSWU.png",
+    "t": [
+      "MoF",
+      "SA",
+      "UFO",
+      "soku",
+      "DS",
+      "TD",
+      "HM",
+      "ISC",
+      "LoLK",
+      "UM",
+      "100BM",
+      "UDoALG",
+      "st5",
+      "ex"
+    ]
+  },
+  {
+    "g": "8a8a69b6-10cd-4759-aedd-d1a09d8d5ea0_yasaka_kanako",
+    "d": "Yasaka Kanako",
+    "u": "https://tohosort.frelia.my/src/assets/chars/nQ78Lz7.png",
+    "t": [
+      "MoF",
+      "soku",
+      "DS",
+      "HM",
+      "ISC",
+      "VD",
+      "17.5",
+      "st6",
+      "ex"
+    ]
+  },
+  {
+    "g": "da3d59c4-9f2f-4699-883b-c5ce762a847c_moriya_suwako",
+    "d": "Moriya Suwako",
+    "u": "https://tohosort.frelia.my/src/assets/chars/yJaD5ZV.png",
+    "t": [
+      "MoF",
+      "SA",
+      "soku",
+      "DS",
+      "HM",
+      "ISC",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "56b3b325-801b-4041-9d86-d6c2ba16289a_nagae_iku",
+    "d": "Nagae Iku",
+    "u": "https://tohosort.frelia.my/src/assets/chars/xgAlECj.png",
+    "t": [
+      "SWR",
+      "soku",
+      "DS",
+      "HM",
+      "VD",
+      "st5"
+    ]
+  },
+  {
+    "g": "2819c18f-fe87-4806-b31a-209e8fb8dea3_hinanawi_tenshi",
+    "d": "Hinanawi Tenshi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/tZLYivt.png",
+    "t": [
+      "SWR",
+      "soku",
+      "DS",
+      "HM",
+      "ISC",
+      "AoCF",
+      "VD",
+      "100BM",
+      "st6"
+    ]
+  },
+  {
+    "g": "d89cc91b-55bc-4ffd-8192-6e00f9cebe58_kisume",
+    "d": "Kisume",
+    "u": "https://tohosort.frelia.my/src/assets/chars/VgJgaEf.png",
+    "t": [
+      "SA",
+      "DS",
+      "st1"
+    ]
+  },
+  {
+    "g": "ac003d3a-1025-4462-b827-62d4e362085d_kurodani_yamame",
+    "d": "Kurodani Yamame",
+    "u": "https://tohosort.frelia.my/src/assets/chars/sqgJ2St.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "17.5",
+      "st1"
+    ]
+  },
+  {
+    "g": "45a95376-0014-47e3-862f-2d3a02afff8f_mizuhashi_parsee",
+    "d": "Mizuhashi Parsee",
+    "u": "https://tohosort.frelia.my/src/assets/chars/lkoAJod.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "st2"
+    ]
+  },
+  {
+    "g": "76c5e7f0-02ca-4ef3-8646-dcf22bcde007_hoshiguma_yuugi",
+    "d": "Hoshiguma Yuugi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/tDO653L.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "17.5",
+      "st3"
+    ]
+  },
+  {
+    "g": "b578b839-88a8-4bbb-bd00-dfa828d1d270_komeiji_satori",
+    "d": "Komeiji Satori",
+    "u": "https://tohosort.frelia.my/src/assets/chars/dup7Nt6.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "VD",
+      "st4"
+    ]
+  },
+  {
+    "g": "4c9b22c4-6e23-4197-9892-5a936e382bd0_kaenbyou_rin (orin)",
+    "d": "Kaenbyou Rin (Orin)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/uQjbw1W.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "UDoALG",
+      "st4",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "19094de6-4149-4665-9325-cb726d8ddd0d_reiuji_utsuho (okuu)",
+    "d": "Reiuji Utsuho (Okuu)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/DfdaXPW.png",
+    "t": [
+      "SA",
+      "soku",
+      "DS",
+      "HM",
+      "VD",
+      "17.5",
+      "st6"
+    ]
+  },
+  {
+    "g": "a4fe454e-ff8c-4658-b667-74cb0ca60f93_komeiji_koishi",
+    "d": "Komeiji Koishi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/wVCcens.png",
+    "t": [
+      "SA",
+      "DS",
+      "HM",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "8b6285d9-7ad3-4eb6-91b9-18a62ffe8358_nazrin",
+    "d": "Nazrin",
+    "u": "https://tohosort.frelia.my/src/assets/chars/EpHQbiY.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "UDoALG",
+      "st1",
+      "st5"
+    ]
+  },
+  {
+    "g": "ba3ec07f-601e-4f91-ad5d-1ac82bb98f04_tatara_kogasa",
+    "d": "Tatara Kogasa",
+    "u": "https://tohosort.frelia.my/src/assets/chars/kJbv4dc.png",
+    "t": [
+      "UFO",
+      "TD",
+      "DS",
+      "HM",
+      "17.5",
+      "st2",
+      "ex"
+    ]
+  },
+  {
+    "g": "cdfc4aae-5311-4f9f-823c-5691f6cf1b8e_kumoi_ichirin",
+    "d": "Kumoi Ichirin",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Fyn5yVx.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "ULiL",
+      "AoCF",
+      "st3"
+    ]
+  },
+  {
+    "g": "8de35810-9cd6-414a-a84c-797af025d13c_murasa_minamitsu",
+    "d": "Murasa Minamitsu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/39KYpvW.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "17.5",
+      "st4"
+    ]
+  },
+  {
+    "g": "808a8bc6-0332-4323-a1a3-d8eba19638ac_toramaru_shou",
+    "d": "Toramaru Shou",
+    "u": "https://tohosort.frelia.my/src/assets/chars/5yihisu.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "st5"
+    ]
+  },
+  {
+    "g": "6a03c015-286c-44f4-887c-3ed2e785a6d1_hijiri_byakuren",
+    "d": "Hijiri Byakuren",
+    "u": "https://tohosort.frelia.my/src/assets/chars/2ppPxny.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "21f83095-69ba-470f-a3bc-c0efa89c69e4_houjuu_nue",
+    "d": "Houjuu Nue",
+    "u": "https://tohosort.frelia.my/src/assets/chars/zL4S8Mj.png",
+    "t": [
+      "UFO",
+      "DS",
+      "TD",
+      "HM",
+      "VD",
+      "st4",
+      "st6",
+      "ex"
+    ]
+  },
+  {
+    "g": "d216d746-e3ef-4463-ab6a-e733ac04f1d7_himekaidou_hatate",
+    "d": "Himekaidou Hatate",
+    "u": "https://tohosort.frelia.my/src/assets/chars/LgvoTaJ.png",
+    "t": [
+      "DS",
+      "HM",
+      "ISC",
+      "ex"
+    ]
+  },
+  {
+    "g": "055bf15b-eb98-4a63-be60-518870ff714a_sunny_milk",
+    "d": "Sunny Milk",
+    "u": "https://tohosort.frelia.my/src/assets/chars/VbqXiB6.png",
+    "t": [
+      "book",
+      "GFW",
+      "HM",
+      "st1",
+      "st2",
+      "st3"
+    ]
+  },
+  {
+    "g": "c17ea095-ef09-44e7-94cf-5b9e8b8dea18_luna_child",
+    "d": "Luna Child",
+    "u": "https://tohosort.frelia.my/src/assets/chars/OBqgP48.png",
+    "t": [
+      "book",
+      "GFW",
+      "HM",
+      "st1",
+      "st2",
+      "st3"
+    ]
+  },
+  {
+    "g": "31e4e8bc-d40b-4d99-972b-82f472414a28_star_sapphire",
+    "d": "Star Sapphire",
+    "u": "https://tohosort.frelia.my/src/assets/chars/sNw61ap.png",
+    "t": [
+      "book",
+      "GFW",
+      "HM",
+      "st1",
+      "st2",
+      "st3"
+    ]
+  },
+  {
+    "g": "348779c1-faf4-4ae1-ae0d-687f8947cb66_kasodani_kyouko",
+    "d": "Kasodani Kyouko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/sLiqEBA.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "st2"
+    ]
+  },
+  {
+    "g": "3fddce4b-6d46-4ffb-8b38-72598c509261_miyako_yoshika",
+    "d": "Miyako Yoshika",
+    "u": "https://tohosort.frelia.my/src/assets/chars/6jq6eh6.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "st3",
+      "st4"
+    ]
+  },
+  {
+    "g": "e9a3ed0a-755b-4bf1-bc3c-7058371c22bc_kaku_seiga",
+    "d": "Kaku Seiga",
+    "u": "https://tohosort.frelia.my/src/assets/chars/090hLPL.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "st4"
+    ]
+  },
+  {
+    "g": "17f2c15a-f773-41d8-afeb-c836fb2f08e0_soga_no tojiko",
+    "d": "Soga no Tojiko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/y0UXwFO.png",
+    "t": [
+      "TD",
+      "HM",
+      "st5"
+    ]
+  },
+  {
+    "g": "e6c0cac2-dff4-402c-b72e-3bf726114012_mononobe_no futo",
+    "d": "Mononobe no Futo",
+    "u": "https://tohosort.frelia.my/src/assets/chars/WTZ97LE.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "st5"
+    ]
+  },
+  {
+    "g": "ef1d1433-4d42-48ac-93e4-7e464e787cf9_toyosatomimi_no miko",
+    "d": "Toyosatomimi no Miko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/3Xiqd22.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "901424ed-938f-4887-9000-fbe1b975fd4a_futatsuiwa_mamizou",
+    "d": "Futatsuiwa Mamizou",
+    "u": "https://tohosort.frelia.my/src/assets/chars/gMpWdmA.png",
+    "t": [
+      "TD",
+      "HM",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "100BM",
+      "UDoALG",
+      "ex"
+    ]
+  },
+  {
+    "g": "3c0795b8-e6fb-4161-8aeb-912128a9dbf7_hata_no kokoro",
+    "d": "Hata no Kokoro",
+    "u": "https://tohosort.frelia.my/src/assets/chars/fxCGmUk.png",
+    "t": [
+      "book",
+      "HM",
+      "ULiL",
+      "AoCF",
+      "st6"
+    ]
+  },
+  {
+    "g": "11119d74-52ab-4481-bf84-c2d643b065b9_wakasagihime",
+    "d": "Wakasagihime",
+    "u": "https://tohosort.frelia.my/src/assets/chars/brWCLVx.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "100BM",
+      "st1"
+    ]
+  },
+  {
+    "g": "48d0fc0b-1b2d-474d-97e4-0c83ab41333f_sekibanki",
+    "d": "Sekibanki",
+    "u": "https://tohosort.frelia.my/src/assets/chars/VAMLiJD.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "100BM",
+      "st2"
+    ]
+  },
+  {
+    "g": "319652b6-3942-4c47-816d-498c37599e26_imaizumi_kagerou",
+    "d": "Imaizumi Kagerou",
+    "u": "https://tohosort.frelia.my/src/assets/chars/qwwL0bB.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "st3"
+    ]
+  },
+  {
+    "g": "6cf0a94e-d3ed-4f28-9276-00bc95a84da0_tsukumo_benben",
+    "d": "Tsukumo Benben",
+    "u": "https://tohosort.frelia.my/src/assets/chars/vWNeMaH.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "b46f3e9d-c8a6-40f2-8a98-94adb2e22432_tsukumo_yatsuhashi",
+    "d": "Tsukumo Yatsuhashi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/EJFQHQN.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "cb4392aa-01e5-4dad-921a-14b7ec2f21ff_kijin_seija",
+    "d": "Kijin Seija",
+    "u": "https://tohosort.frelia.my/src/assets/chars/16RUacj.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "0622d9e6-b2c9-4192-ad79-45a583e0c620_sukuna_shinmyoumaru",
+    "d": "Sukuna Shinmyoumaru",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Zl2tN7W.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "ULiL",
+      "AoCF",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "12fb901c-f8b4-41bf-9ca5-4d3e83a5e0a7_horikawa_raiko",
+    "d": "Horikawa Raiko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/SLLEccR.png",
+    "t": [
+      "DDC",
+      "ISC",
+      "AoCF",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "dbc7f68a-ccc3-4317-9a83-14d730621840_usami_sumireko",
+    "d": "Usami Sumireko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/mc7ICW6.png",
+    "t": [
+      "ULiL",
+      "AoCF",
+      "VD",
+      "st6"
+    ]
+  },
+  {
+    "g": "d7528179-65cc-4515-a2c4-a2450cec9f0f_seiran",
+    "d": "Seiran",
+    "u": "https://tohosort.frelia.my/src/assets/chars/0ra00WG.png",
+    "t": [
+      "LoLK",
+      "VD",
+      "UDoALG",
+      "st1"
+    ]
+  },
+  {
+    "g": "948e072f-b347-45cb-b067-53be29390ff9_ringo",
+    "d": "Ringo",
+    "u": "https://tohosort.frelia.my/src/assets/chars/xQOsFlZ.png",
+    "t": [
+      "LoLK",
+      "VD",
+      "st2"
+    ]
+  },
+  {
+    "g": "62bae211-dba1-4827-b96b-df10fbf5eaa2_doremy_sweet",
+    "d": "Doremy Sweet",
+    "u": "https://tohosort.frelia.my/src/assets/chars/rGS7dyn.png",
+    "t": [
+      "LoLK",
+      "AoCF",
+      "VD",
+      "st3",
+      "ex"
+    ]
+  },
+  {
+    "g": "979f775c-daa4-4486-9639-009dc6b23db9_kishin_sagume",
+    "d": "Kishin Sagume",
+    "u": "https://tohosort.frelia.my/src/assets/chars/HLT338X.png",
+    "t": [
+      "LoLK",
+      "VD",
+      "st4"
+    ]
+  },
+  {
+    "g": "c3e990b5-0d90-4e81-9f36-9b763b2e40b2_clownpiece",
+    "d": "Clownpiece",
+    "u": "https://tohosort.frelia.my/src/assets/chars/9Jje7ZQ.jpg",
+    "t": [
+      "LoLK",
+      "VD",
+      "100BM",
+      "st5"
+    ]
+  },
+  {
+    "g": "da6dfd5a-c501-4d72-bde8-6ee9271728da_junko",
+    "d": "Junko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/NsfLZjY.jpg",
+    "t": [
+      "LoLK",
+      "VD",
+      "st6",
+      "ex"
+    ]
+  },
+  {
+    "g": "910c3b10-d083-40b1-ad27-d062a402f3a3_hecatia_lapislazuli",
+    "d": "Hecatia Lapislazuli",
+    "u": "https://tohosort.frelia.my/src/assets/chars/EH3Ulol.png",
+    "t": [
+      "LoLK",
+      "VD",
+      "ex"
+    ]
+  },
+  {
+    "g": "2150223b-c20f-4021-ba71-15a194a046ee_eternity_larva",
+    "d": "Eternity Larva",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ql5KxJH.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "100BM",
+      "st1"
+    ]
+  },
+  {
+    "g": "80f3a9d0-613e-4621-8b08-e152db66e2a1_sakata_nemuno",
+    "d": "Sakata Nemuno",
+    "u": "https://tohosort.frelia.my/src/assets/chars/gYFhJ3Y.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "100BM",
+      "st2"
+    ]
+  },
+  {
+    "g": "b50cb89c-66d1-40f6-9b5f-65ccbf33fe2d_komano_aunn",
+    "d": "Komano Aunn",
+    "u": "https://tohosort.frelia.my/src/assets/chars/wWUStkF.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "UDoALG",
+      "st3"
+    ]
+  },
+  {
+    "g": "2f5bec19-09e9-41ca-9a31-13945d25b4da_yatadera_narumi",
+    "d": "Yatadera Narumi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/wrPVhAo.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "100BM",
+      "st4"
+    ]
+  },
+  {
+    "g": "5b906a13-5333-4496-876a-5b0c5f5becad_nishida_satono",
+    "d": "Nishida Satono",
+    "u": "https://tohosort.frelia.my/src/assets/chars/8w9gAy2.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "st5"
+    ]
+  },
+  {
+    "g": "7c7931ea-e329-473a-a440-e07fdf9f4256_teireida_mai",
+    "d": "Teireida Mai",
+    "u": "https://tohosort.frelia.my/src/assets/chars/DesAqAC.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "st5"
+    ]
+  },
+  {
+    "g": "e46b2d84-9d9e-4b46-bceb-dd18efe9d98c_matara_okina",
+    "d": "Matara Okina",
+    "u": "https://tohosort.frelia.my/src/assets/chars/icWvMyo.png",
+    "t": [
+      "HSiFS",
+      "VD",
+      "17.5",
+      "st6",
+      "ex"
+    ]
+  },
+  {
+    "g": "54a03008-5d1a-43aa-98dc-11fe581e13fd_yorigami_shion",
+    "d": "Yorigami Shion",
+    "u": "https://tohosort.frelia.my/src/assets/chars/LenxXR4.png",
+    "t": [
+      "AoCF",
+      "17.5",
+      "st6"
+    ]
+  },
+  {
+    "g": "8ffc7e3c-de8a-4ab6-a420-e0211a38d52a_yorigami_joon",
+    "d": "Yorigami Joon",
+    "u": "https://tohosort.frelia.my/src/assets/chars/V9OznT1.png",
+    "t": [
+      "AoCF",
+      "17.5",
+      "st6"
+    ]
+  },
+  {
+    "g": "c8ec80b4-3ee1-4612-817e-d57d4793c555_ebisu_eika",
+    "d": "Ebisu Eika",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Ke3316E.png",
+    "t": [
+      "WBaWC",
+      "100BM",
+      "st1"
+    ]
+  },
+  {
+    "g": "7296706b-c0e8-4b81-a3bb-08471fb280fc_ushizaki_urumi",
+    "d": "Ushizaki Urumi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ru2vIIW.png",
+    "t": [
+      "WBaWC",
+      "100BM",
+      "st2"
+    ]
+  },
+  {
+    "g": "25608d59-2601-4389-a5c8-f9e96d393db8_niwatari_kutaka",
+    "d": "Niwatari Kutaka",
+    "u": "https://tohosort.frelia.my/src/assets/chars/QTQt0ZL.png",
+    "t": [
+      "WBaWC",
+      "17.5",
+      "100BM",
+      "st3"
+    ]
+  },
+  {
+    "g": "6a6cc491-68f2-4fa6-b5b1-a273a924e921_kicchou_yachie",
+    "d": "Kicchou Yachie",
+    "u": "https://tohosort.frelia.my/src/assets/chars/CzcIMxF.png",
+    "t": [
+      "WBaWC",
+      "UDoALG",
+      "st4"
+    ]
+  },
+  {
+    "g": "0f7f3715-563c-4268-b0e6-49eec287c9ad_joutouguu_mayumi",
+    "d": "Joutouguu Mayumi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/GxeziYO.png",
+    "t": [
+      "WBaWC",
+      "st5"
+    ]
+  },
+  {
+    "g": "ef1b96c5-bad2-432c-9ab4-6cc511c08dac_haniyasushin_keiki",
+    "d": "Haniyasushin Keiki",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Z4jclTi.png",
+    "t": [
+      "WBaWC",
+      "st6"
+    ]
+  },
+  {
+    "g": "cfa3a95e-6660-433b-a14c-3a0bce9360d3_kurokoma_saki",
+    "d": "Kurokoma Saki",
+    "u": "https://tohosort.frelia.my/src/assets/chars/H2v2GPy.png",
+    "t": [
+      "WBaWC",
+      "100BM",
+      "UDoALG",
+      "ex"
+    ]
+  },
+  {
+    "g": "b6f2a370-26c5-4710-b2ed-8cc7edc5a045_goutokuji_mike",
+    "d": "Goutokuji Mike",
+    "u": "https://tohosort.frelia.my/src/assets/chars/FltSdtv.png",
+    "t": [
+      "UM",
+      "100BM",
+      "st1"
+    ]
+  },
+  {
+    "g": "1c72e470-1737-4791-82d1-ccc5d5471469_yamashiro_takane",
+    "d": "Yamashiro Takane",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Aaq99GQ.png",
+    "t": [
+      "UM",
+      "100BM",
+      "st2"
+    ]
+  },
+  {
+    "g": "244a761e-6ad0-4aac-b5bc-7d5ad4b24869_komakusa_sannyo",
+    "d": "Komakusa Sannyo",
+    "u": "https://tohosort.frelia.my/src/assets/chars/DKupiv1.png",
+    "t": [
+      "UM",
+      "st3"
+    ]
+  },
+  {
+    "g": "77b919d0-1dee-47e4-abfb-05cf38bd4942_tamatsukuri_misumaru",
+    "d": "Tamatsukuri Misumaru",
+    "u": "https://tohosort.frelia.my/src/assets/chars/0V9jLUm.png",
+    "t": [
+      "UM",
+      "st4"
+    ]
+  },
+  {
+    "g": "9a0f817f-77fd-4540-b6b2-c4243a07683d_kudamaki_tsukasa",
+    "d": "Kudamaki Tsukasa",
+    "u": "https://tohosort.frelia.my/src/assets/chars/hiKwpr7.png",
+    "t": [
+      "UM",
+      "UDoALG",
+      "100BM",
+      "st5",
+      "st6",
+      "ex"
+    ]
+  },
+  {
+    "g": "b6978414-8ce7-4e69-9a57-355225164e7a_iizunamaru_megumu",
+    "d": "Iizunamaru Megumu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/4fhGB1j.png",
+    "t": [
+      "UM",
+      "100BM",
+      "st5"
+    ]
+  },
+  {
+    "g": "5256780b-b75d-4fa7-90ac-81192d11cf52_tenkyuu_chimata",
+    "d": "Tenkyuu Chimata",
+    "u": "https://tohosort.frelia.my/src/assets/chars/7ebXBQi.png",
+    "t": [
+      "UM",
+      "100BM",
+      "st6"
+    ]
+  },
+  {
+    "g": "d0070fb6-f102-45a4-9c69-ad8a84aa0cfa_himemushi_momoyo",
+    "d": "Himemushi Momoyo",
+    "u": "https://tohosort.frelia.my/src/assets/chars/UG0f5r4.png",
+    "t": [
+      "UM",
+      "100BM",
+      "ex"
+    ]
+  },
+  {
+    "g": "48cb5740-3bc3-4a39-9719-63451483caef_toutetsu_yuuma",
+    "d": "Toutetsu Yuuma",
+    "u": "https://tohosort.frelia.my/src/assets/chars/WEbfrcr.png",
+    "t": [
+      "17.5",
+      "UDoALG",
+      "st6"
+    ]
+  },
+  {
+    "g": "8496a716-d198-4e9e-9758-875166b5d515_son_biten",
+    "d": "Son Biten",
+    "u": "https://tohosort.frelia.my/src/assets/chars/111176253_p0.png",
+    "t": [
+      "UDoALG",
+      "st5"
+    ]
+  },
+  {
+    "g": "0a4df9b5-2359-4b7b-916a-761c311c2517_mitsugashira_enoko",
+    "d": "Mitsugashira Enoko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/111420339_p0.png",
+    "t": [
+      "UDoALG",
+      "st5"
+    ]
+  },
+  {
+    "g": "f8c50de4-a13e-496d-9a1e-d8c175d12d43_tenkajin_chiyari",
+    "d": "Tenkajin Chiyari",
+    "u": "https://tohosort.frelia.my/src/assets/chars/111576609_p0.png",
+    "t": [
+      "UDoALG",
+      "st5"
+    ]
+  },
+  {
+    "g": "10d5089f-f763-4d10-9369-bc0133aaaa2a_yomotsu_hisami",
+    "d": "Yomotsu Hisami",
+    "u": "https://tohosort.frelia.my/src/assets/chars/111798695_p0.png",
+    "t": [
+      "UDoALG",
+      "st5"
+    ]
+  },
+  {
+    "g": "dd013205-21ad-45fc-b6bc-423c4f991668_nippaku_zanmu",
+    "d": "Nippaku Zanmu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/111935114_p0.png",
+    "t": [
+      "UDoALG",
+      "st6"
+    ]
+  },
+  {
+    "g": "7b5a4d78-5ce6-4c78-ba00-64a8ba3ec588_chirizuka_ubame",
+    "d": "Chirizuka Ubame",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ubame.png",
+    "t": [
+      "FW",
+      "st1"
+    ]
+  },
+  {
+    "g": "9de99655-2369-474b-871f-d78cb9d4dc7c_houjuu_chimi",
+    "d": "Houjuu Chimi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/chimi.png",
+    "t": [
+      "FW",
+      "st2"
+    ]
+  },
+  {
+    "g": "ac4fb8f5-6e79-4d63-8362-497913d588f2_michigami_nareko",
+    "d": "Michigami Nareko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/nareko.png",
+    "t": [
+      "FW",
+      "st3"
+    ]
+  },
+  {
+    "g": "b7f8e033-4a2e-4256-9157-1156124e174a_asama_yuiman",
+    "d": "Asama Yuiman",
+    "u": "https://tohosort.frelia.my/src/assets/chars/yuiman.png",
+    "t": [
+      "FW",
+      "st4",
+      "ex"
+    ]
+  },
+  {
+    "g": "9d2b4d54-f85f-4f07-aa02-be91d97b2dad_iwanaga_ariya",
+    "d": "Iwanaga Ariya",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ariya.png",
+    "t": [
+      "FW",
+      "st6"
+    ]
+  },
+  {
+    "g": "e59a3352-e8dd-46fe-8b90-8589558c228b_watari_nina",
+    "d": "Watari Nina",
+    "u": "https://tohosort.frelia.my/src/assets/chars/nina.png",
+    "t": [
+      "FW",
+      "ex"
+    ]
+  },
+  {
+    "g": "4051221d-a63d-4fd6-9366-245a1e946352_hieda_no akyuu",
+    "d": "Hieda no Akyuu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ogONuLZ.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "98a733c5-3dc5-44dc-a89a-6d0146c6736f_tokiko",
+    "d": "Tokiko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Y4maOc8.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "a6078147-08db-40c9-b0ba-3c6d3186b1db_reisen_(manga)",
+    "d": "Reisen (Manga)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/cWjCo2j.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "89c5d872-11c8-43d1-ae98-7617b107a478_watatsuki_no toyohime",
+    "d": "Watatsuki no Toyohime",
+    "u": "https://tohosort.frelia.my/src/assets/chars/uEBxsEX.png",
+    "t": [
+      "book",
+      "FW",
+      "st5"
+    ]
+  },
+  {
+    "g": "6ec46b1a-245f-4383-a58b-0c6a49859e42_watatsuki_no yorihime",
+    "d": "Watatsuki no Yorihime",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Txu2P7S.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "540b38d2-ad06-4fb7-beaa-a9e650759eec_maribel_hearn",
+    "d": "Maribel Hearn",
+    "u": "https://tohosort.frelia.my/src/assets/chars/XUI9vPo.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "bce4e222-af21-42d7-b47f-ef0cb5689eab_usami_renko",
+    "d": "Usami Renko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/1P5EXRt.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "a53d81c8-51d4-4a5b-9076-00311fe4bfb3_ibaraki_kasen",
+    "d": "Ibaraki Kasen",
+    "u": "https://tohosort.frelia.my/src/assets/chars/dQHnPPe.png",
+    "t": [
+      "book",
+      "ULiL",
+      "AoCF",
+      "st5"
+    ]
+  },
+  {
+    "g": "3780341c-7107-4738-96e8-9df6dadfe32b_motoori_kosuzu",
+    "d": "Motoori Kosuzu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/jEsJJo8.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "07fd9569-fbf3-4904-bdc0-234e8c1aec54_okunoda_miyoi",
+    "d": "Okunoda Miyoi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/a5V63gx.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "97640fda-fd0e-4385-aa0c-66508ed76e3b_miyadeguchi_mizuchi",
+    "d": "Miyadeguchi Mizuchi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/mizuchi.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "ab7b5b93-2df0-47c9-9706-d9b67d97734a_hakurei_reimu (pc-98)",
+    "d": "Hakurei Reimu (PC-98)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/IZsGAMS.png",
+    "t": [
+      "HRtP",
+      "SoEW",
+      "PoDD",
+      "LLS",
+      "MS",
+      "st4"
+    ]
+  },
+  {
+    "g": "afa8bd46-5274-4b45-ad27-859a516f8529_shingyoku_(female)",
+    "d": "Shingyoku (Female)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/KuPiR2k.png",
+    "t": [
+      "HRtP",
+      "st1"
+    ]
+  },
+  {
+    "g": "42d1e7d3-7d9d-45b5-92b4-54f9566b1527_mima",
+    "d": "Mima",
+    "u": "https://tohosort.frelia.my/src/assets/chars/odH03t2.png",
+    "t": [
+      "HRtP",
+      "SoEW",
+      "PoDD",
+      "MS",
+      "st3",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "e9553c1e-91f2-4524-997d-9ae08e6de293_elis",
+    "d": "Elis",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ytnL1xd.png",
+    "t": [
+      "HRtP",
+      "st5"
+    ]
+  },
+  {
+    "g": "9f00fcaa-d170-402c-b286-81357ef11937_kikuri",
+    "d": "Kikuri",
+    "u": "https://tohosort.frelia.my/src/assets/chars/fX2Kqik.png",
+    "t": [
+      "HRtP",
+      "st5"
+    ]
+  },
+  {
+    "g": "52e9e637-8053-430f-8e9c-73398e8402a3_sariel",
+    "d": "Sariel",
+    "u": "https://tohosort.frelia.my/src/assets/chars/Wyc7YFw.png",
+    "t": [
+      "HRtP",
+      "st6"
+    ]
+  },
+  {
+    "g": "b9854b4e-fe84-48f3-aed2-bd7c5f6dc025_konngara",
+    "d": "Konngara",
+    "u": "https://tohosort.frelia.my/src/assets/chars/dg9jLHv.png",
+    "t": [
+      "HRtP",
+      "st6"
+    ]
+  },
+  {
+    "g": "ef74a7d7-df32-4759-89e8-87081d23c6c3_rika",
+    "d": "Rika",
+    "u": "https://tohosort.frelia.my/src/assets/chars/02Xb4pU.png",
+    "t": [
+      "SoEW",
+      "st1",
+      "ex"
+    ]
+  },
+  {
+    "g": "8dfa17e4-b081-406a-be87-d0acff593815_meira",
+    "d": "Meira",
+    "u": "https://tohosort.frelia.my/src/assets/chars/p529JgT.png",
+    "t": [
+      "SoEW",
+      "st2"
+    ]
+  },
+  {
+    "g": "14706548-b0a1-436f-8f3b-b01eded80e55_kirisame_marisa (pc-98)",
+    "d": "Kirisame Marisa (PC-98)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/wxE7cBm.png",
+    "t": [
+      "SoEW",
+      "PoDD",
+      "LLS",
+      "MS",
+      "st4"
+    ]
+  },
+  {
+    "g": "0c7981ea-efe9-4659-b824-0fb537746d15_ellen",
+    "d": "Ellen",
+    "u": "https://tohosort.frelia.my/src/assets/chars/3iNNL0c.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "febe3cce-1b83-4cf0-9fb1-ca9422857bef_kotohime",
+    "d": "Kotohime",
+    "u": "https://tohosort.frelia.my/src/assets/chars/kRSGtpq.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "0e305178-f544-4d65-9a10-8783e3464113_kana_anaberal",
+    "d": "Kana Anaberal",
+    "u": "https://tohosort.frelia.my/src/assets/chars/rBvKMk5.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "9b68cb11-6e73-4553-9674-789085a9b2d5_asakura_rikako",
+    "d": "Asakura Rikako",
+    "u": "https://tohosort.frelia.my/src/assets/chars/VIf5gUK.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "df3df016-a1fb-4e11-adb0-0380b181d088_kitashirakawa_chiyuri",
+    "d": "Kitashirakawa Chiyuri",
+    "u": "https://tohosort.frelia.my/src/assets/chars/tZFBycy.png",
+    "t": [
+      "PoDD",
+      "st5"
+    ]
+  },
+  {
+    "g": "2af73c07-05d8-484c-9f3a-3784201e38d7_okazaki_yumemi",
+    "d": "Okazaki Yumemi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/c9rnG3n.png",
+    "t": [
+      "PoDD",
+      "st6"
+    ]
+  },
+  {
+    "g": "6f7cd786-9880-442e-98de-c0b2c282ea43_ruukoto",
+    "d": "Ruukoto",
+    "u": "https://tohosort.frelia.my/src/assets/chars/dko67SJ.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "3947d4fb-9242-4e1f-ac61-68ba4973a9f9_orange",
+    "d": "Orange",
+    "u": "https://tohosort.frelia.my/src/assets/chars/m8wXE5U.png",
+    "t": [
+      "LLS",
+      "st1"
+    ]
+  },
+  {
+    "g": "56b3a93a-b94c-47a7-ab66-ccfe9868564c_kurumi",
+    "d": "Kurumi",
+    "u": "https://tohosort.frelia.my/src/assets/chars/0rvq1ph.png",
+    "t": [
+      "LLS",
+      "st2"
+    ]
+  },
+  {
+    "g": "cec815d3-4a75-4e42-8780-13cc4222e268_elly",
+    "d": "Elly",
+    "u": "https://tohosort.frelia.my/src/assets/chars/iIPftHn.png",
+    "t": [
+      "LLS",
+      "st3"
+    ]
+  },
+  {
+    "g": "8d53b76a-af57-4ebd-a19f-106e059bd956_yuuka_(pc-98)",
+    "d": "Yuuka (PC-98)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ivUSwxp.png",
+    "t": [
+      "LLS",
+      "MS",
+      "st5",
+      "st6"
+    ]
+  },
+  {
+    "g": "171919cf-7503-4002-b2d3-2ca4c48d01c0_mugetsu",
+    "d": "Mugetsu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/bYA9E16.png",
+    "t": [
+      "LLS",
+      "ex"
+    ]
+  },
+  {
+    "g": "bcfcd9c2-7e7b-4764-810b-a61b49520f5f_gengetsu",
+    "d": "Gengetsu",
+    "u": "https://tohosort.frelia.my/src/assets/chars/TIOTtV9.png",
+    "t": [
+      "LLS",
+      "ex"
+    ]
+  },
+  {
+    "g": "849f7206-4d23-4a3b-8ffe-c13cabcbd1fd_sara",
+    "d": "Sara",
+    "u": "https://tohosort.frelia.my/src/assets/chars/2QUbCrU.png",
+    "t": [
+      "MS",
+      "st1"
+    ]
+  },
+  {
+    "g": "0b52c4d5-a07e-422f-975b-7aaa2015acd4_louise",
+    "d": "Louise",
+    "u": "https://tohosort.frelia.my/src/assets/chars/nDM5aB6.png",
+    "t": [
+      "MS",
+      "st2",
+      "st4"
+    ]
+  },
+  {
+    "g": "132a52a0-2af0-494c-b290-7156da9199b9_alice_(pc-98)",
+    "d": "Alice (PC-98)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/KaBuRTW.png",
+    "t": [
+      "MS",
+      "st3",
+      "ex"
+    ]
+  },
+  {
+    "g": "55801a63-a385-4149-92a5-60a106e67ee2_yuki",
+    "d": "Yuki",
+    "u": "https://tohosort.frelia.my/src/assets/chars/FfcmDgp.png",
+    "t": [
+      "MS",
+      "st4"
+    ]
+  },
+  {
+    "g": "b77760f2-7c50-4f17-a584-a66b4de0ca58_mai",
+    "d": "Mai",
+    "u": "https://tohosort.frelia.my/src/assets/chars/r6w7TX1.png",
+    "t": [
+      "MS",
+      "st4"
+    ]
+  },
+  {
+    "g": "c1ded04c-afea-47de-aeb4-8c961c005122_yumeko",
+    "d": "Yumeko",
+    "u": "https://tohosort.frelia.my/src/assets/chars/PcPqkdO.png",
+    "t": [
+      "MS",
+      "st5"
+    ]
+  },
+  {
+    "g": "46694e45-3871-42ea-a97c-7f2ffb9910ce_shinki",
+    "d": "Shinki",
+    "u": "https://tohosort.frelia.my/src/assets/chars/gPE95S7.png",
+    "t": [
+      "MS",
+      "st6"
+    ]
+  },
+  {
+    "g": "28b38f99-4ae5-431c-95ae-467e2cd46fd4_mimi-chan",
+    "d": "Mimi-chan",
+    "u": "https://tohosort.frelia.my/src/assets/chars/zBl2zlv.png",
+    "t": [
+      "PoDD"
+    ]
+  },
+  {
+    "g": "904a6db0-fb9e-4258-abac-4ebc3196f7db_unzan",
+    "d": "Unzan",
+    "u": "https://tohosort.frelia.my/src/assets/chars/r5eWREh.png",
+    "t": [
+      "UFO",
+      "DS",
+      "HM",
+      "ULiL",
+      "AoCF",
+      "st3"
+    ]
+  },
+  {
+    "g": "9cb6180b-5110-41aa-90c2-4a7caf2b82b9_genji",
+    "d": "Genji",
+    "u": "https://tohosort.frelia.my/src/assets/chars/LoUqOuH.png",
+    "t": [
+      "SoEW",
+      "PoDD",
+      "LLS",
+      "MS"
+    ]
+  },
+  {
+    "g": "c4cec9a5-3ba4-4bb9-9fe1-fb49abe2a36a_shingyoku_(male)",
+    "d": "Shingyoku (Male)",
+    "u": "https://tohosort.frelia.my/src/assets/chars/a5uwlgN.png",
+    "t": [
+      "HRtP",
+      "st1"
+    ]
+  },
+  {
+    "g": "f5bad8f7-104e-41f2-b9bc-2160a18fd2a7_yuugenmagan",
+    "d": "YuugenMagan",
+    "u": "https://tohosort.frelia.my/src/assets/chars/IOW8GdU.png",
+    "t": [
+      "HRtP",
+      "st3"
+    ]
+  },
+  {
+    "g": "2f08c2ba-364f-49ed-b58a-67086ba0a97d_evil_eye sigma",
+    "d": "Evil Eye Sigma",
+    "u": "https://tohosort.frelia.my/src/assets/chars/rAFUMwE.png",
+    "t": [
+      "SoEW",
+      "ex"
+    ]
+  },
+  {
+    "g": "0a3d38a0-915f-43d7-9851-331a47952a08_great_catfish",
+    "d": "Great Catfish",
+    "u": "https://tohosort.frelia.my/src/assets/chars/BgRi9Oh.png",
+    "t": [
+      "soku",
+      "AoCF",
+      "st6"
+    ]
+  },
+  {
+    "g": "efc480a3-779a-48f0-b2bb-0317b5a1d44d_morichika_rinnosuke",
+    "d": "Morichika Rinnosuke",
+    "u": "https://tohosort.frelia.my/src/assets/chars/ITUhsGj.png",
+    "t": [
+      "book",
+      "HM"
+    ]
+  },
+  {
+    "g": "d8a4b897-e1dc-41f0-8c52-5818db2ec4fc_fortune_teller",
+    "d": "Fortune Teller",
+    "u": "https://tohosort.frelia.my/src/assets/chars/BYot23O.png",
+    "t": [
+      "book"
+    ]
+  },
+  {
+    "g": "e4564fd0-7b6a-4d21-8a27-ba3d553601b0_hisoutensoku",
+    "d": "Hisoutensoku",
+    "u": "https://tohosort.frelia.my/src/assets/chars/P4JZ2it.png",
+    "t": [
+      "soku"
+    ]
+  }
+]
