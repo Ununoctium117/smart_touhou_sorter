@@ -1,21 +1,41 @@
 <script lang="ts">
-    import type { SorterEngine } from "./SorterEngine";
+    import type { KeyedManifest, Manifest, SorterEngine } from "./SorterEngine";
 
     interface Props {
-        engine: SorterEngine;
+        sorterEngine: SorterEngine;
+        manifestName: string;
+        manifest: Manifest;
+        keyedManifest: KeyedManifest;
     }
-    let { engine }: Props = $props();
+    let { sorterEngine, manifestName, manifest, keyedManifest }: Props = $props();
 
-    let getPercentComplete = $state(() => engine.EstimateProgress());
+    // This is intentional: We're using this to set the initial value only.
+    // svelte-ignore state_referenced_locally
+    let percentComplete = $state(sorterEngine.EstimateProgress());
+
+    // This is intentional: We're using this to set the initial value only.
+    // svelte-ignore state_referenced_locally
+    let currentBestComparison: string[] = $state(
+        sorterEngine.GetBestComparisons(2, []),
+    );
 
     function submitComparison() {
-        engine.Save('asdf');
+        sorterEngine.Save("asdf");
         // TODO
+
+        percentComplete = sorterEngine.EstimateProgress();
+        currentBestComparison = sorterEngine.GetBestComparisons(2, []);
     }
 </script>
 
-<h1>TEMP</h1>
+<h3>Sorting: {manifestName}</h3>
+
+<ul>
+{#each currentBestComparison as comparisonCharId}
+    <li><h4>{manifest[keyedManifest[comparisonCharId]].d}</h4></li>
+{/each}
+</ul>
 
 <button onclick={submitComparison}> Submit Current Comparison </button>
 
-<h4>Candidate list convergence: {(getPercentComplete() * 100).toFixed(2)}%</h4>
+<h4>Candidate list convergence: {(percentComplete * 100).toFixed(2)}%</h4>

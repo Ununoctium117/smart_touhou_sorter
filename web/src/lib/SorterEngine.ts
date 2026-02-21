@@ -1,9 +1,12 @@
 import {
     create_sorter,
     estimate_progress,
-    serialize_sorter_compressed,
+    get_best_comparisons,
     load_sorter,
+    serialize_sorter_compressed,
 } from "web-engine";
+
+// TODO: Use a webworker to delegate background tasks so the UI can remain responsive... somehow
 
 export type Manifest = {
     g: string;
@@ -11,6 +14,8 @@ export type Manifest = {
     u: string;
     t: string[];
 }[];
+
+export type KeyedManifest = { [k: string]: number };
 
 // conveniently wraps the WASM functions
 export class SorterEngine {
@@ -30,6 +35,10 @@ export class SorterEngine {
             `Saving sorter state to ${saveKey}: ${serialized.length} bytes`,
         );
         localStorage.setItem(saveKey, serialized);
+    }
+
+    public GetBestComparisons(half_num: number, exclusions: string[]): string[] { 
+        return get_best_comparisons(this.handle, half_num, exclusions);
     }
 
     // =====================

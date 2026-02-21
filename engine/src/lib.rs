@@ -5,42 +5,40 @@
 
 use std::collections::{BTreeMap, BTreeSet, HashMap};
 
+use bimap::BiBTreeMap;
 use jiff::{SpanRelativeTo, Timestamp, ToSpan as _, Unit};
 use log::info;
 use ordered_float::NotNan;
-use rand::{
-    Rng as _, RngCore,
-    seq::SliceRandom as _,
-};
+use rand::{Rng as _, RngCore, seq::SliceRandom as _};
 use serde::{Deserialize, Serialize};
 use smallvec::{SmallVec, smallvec};
 
-/// Metadata for a character to be sorted.
-#[derive(Debug, Serialize, Deserialize, Clone)]
-#[serde(transparent)]
-pub struct CharacterMetadata {
-    /// A globally unique ID for the character.
-    pub globally_unique_id: String,
-}
-
-/// Each character is assigned a sorting index when sorting begins. Cheaply copyable.
+// Each character is assigned a sorting index when sorting begins. Cheaply copyable.
 // Sorting IDs are numeric and must start at 0 with no gaps, to allow matchups to be encoded into indices.
 #[derive(Debug, Serialize, Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord, Clone, Copy)]
 #[serde(transparent)]
-pub struct SortingIndex(usize);
+struct SortingIndex(usize);
 
 /// Represents a matchup between two characters.
 #[derive(Debug, Serialize, Deserialize, Hash, PartialEq, Eq, PartialOrd, Ord, Clone)]
 pub struct Matchup {
     // invariant: a < b
-    /// The smaller index
-    pub a: SortingIndex,
-    /// The larger index
-    pub b: SortingIndex,
+
+    // The smaller index
+    a: SortingIndex,
+    // The larger index
+    b: SortingIndex,
 }
 impl Matchup {
-    /// Constructs a new matchup. Matchup::new(a, b) and Matchup::new(b, a) are equivalent.
-    pub fn new(a: SortingIndex, b: SortingIndex) -> Self {
+    /// Constructs a new matchup. Matchup::for_characters(a, b) and Matchup::for_characters(b, a) are equivalent.
+    pub fn for_characters(a: &str, b: &str, data: &CharacterSortingData) -> Self {
+        let a = *data.character_ids.get_by_right(a).unwrap();
+        let b = *data.character_ids.get_by_right(b).unwrap();
+        Self::new(a, b)
+    }
+
+    // Constructs a new matchup. Matchup::new(a, b) and Matchup::new(b, a) are equivalent.
+    fn new(a: SortingIndex, b: SortingIndex) -> Self {
         assert_ne!(a, b);
 
         Self {
@@ -200,9 +198,9 @@ struct SampleCandidateList {
     matching_comparisons_seen: usize,
 }
 impl SampleCandidateList {
-    fn new(metadata: &[CharacterMetadata], rng: &mut dyn RngCore) -> Self {
+    fn new(num_characters: usize, rng: &mut dyn RngCore) -> Self {
         let ordering = {
-            let mut ordering = (0..metadata.len()).map(SortingIndex).collect::<Vec<_>>();
+            let mut ordering = (0..num_characters).map(SortingIndex).collect::<Vec<_>>();
             ordering.shuffle(rng);
             ordering
         };
@@ -421,7 +419,7 @@ impl SampleCandidateList {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CharacterSortingData {
     #[serde(rename = "m")]
-    metadata: Vec<CharacterMetadata>,
+    character_ids: BiBTreeMap<SortingIndex, String>,
 
     #[serde(rename = "h")]
     comparison_history: ComparisonHistory,
@@ -450,7 +448,7 @@ pub struct CharacterSortingData {
 impl Clone for CharacterSortingData {
     fn clone(&self) -> Self {
         Self {
-            metadata: self.metadata.clone(),
+            character_ids: self.character_ids.clone(),
             comparison_history: self.comparison_history.clone(),
             candidate_lists: self.candidate_lists.clone(),
             cached_matchup_data: self.cached_matchup_data.clone(),
@@ -463,41 +461,35 @@ impl CharacterSortingData {
     /// number of candidate lists. The number of candidate lists should be on the order of ~100.
     /// More candidate lists leads to a more accurate sort, but more memory consumption and possibly
     /// a larger number of human comparisons needed.
-    pub fn new(metadata: Vec<CharacterMetadata>, num_candidate_lists: usize) -> Self {
-        Self::new_with_rng(metadata, num_candidate_lists, default_rng())
+    pub fn new(character_ids: impl Iterator<Item = String>, num_candidate_lists: usize) -> Self {
+        Self::new_with_rng(character_ids, num_candidate_lists, default_rng())
     }
 
     fn new_with_rng(
-        metadata: Vec<CharacterMetadata>,
+        character_ids: impl Iterator<Item = String>,
         num_candidate_lists: usize,
         mut rng: Box<dyn DebugRng>,
     ) -> Self {
-        assert!(!metadata.is_empty());
+        let character_ids = character_ids
+            .enumerate()
+            .map(|(idx, id)| (SortingIndex(idx), id))
+            .collect::<BiBTreeMap<_, _>>();
+        assert!(!character_ids.is_empty());
 
         let candidate_lists = (0..num_candidate_lists)
-            .map(|_| SampleCandidateList::new(&metadata, &mut rng))
+            .map(|_| SampleCandidateList::new(character_ids.len(), &mut rng))
             .collect::<Vec<_>>();
 
-        let max_sorting_index = SortingIndex(metadata.len() - 1);
+        let max_sorting_index = SortingIndex(character_ids.len() - 1);
         let cached_matchup_data = Self::compute_matchup_cache(max_sorting_index, &candidate_lists);
 
         Self {
-            metadata,
+            character_ids,
             comparison_history: Default::default(),
             candidate_lists,
             cached_matchup_data,
             rng,
         }
-    }
-
-    /// Returns a reference to the character metadata for the specified sorting index.
-    pub fn get_metadata(&self, sorting_id: SortingIndex) -> &CharacterMetadata {
-        &self.metadata[sorting_id.0]
-    }
-
-    /// Copies all character metadata; returned in an unspecified order.
-    pub fn copy_all_metadata(&self) -> Vec<CharacterMetadata> {
-        self.metadata.clone()
     }
 
     /// Determines if sorting is completed.
@@ -510,7 +502,7 @@ impl CharacterSortingData {
     ///
     /// Returns either the final sort order (from the largest group of identical candidates) if sorting is finished,
     /// or None if the sort order is indeterminate.
-    pub fn get_final_sort_order(&self, epsilon: f64) -> Option<Vec<SortingIndex>> {
+    pub fn get_final_sort_order(&self, epsilon: f64) -> Option<Vec<String>> {
         // If we just started, there will be N groups, each containing 1 element.
         // If we are nearly finished, there will be very few groups, with one containing nearly N elements.
         let unique_groups = self.get_unique_candidate_list_groups();
@@ -523,7 +515,13 @@ impl CharacterSortingData {
 
         let fraction_identical = largest_group_size as f64 / self.candidate_lists.len() as f64;
         if fraction_identical >= (1.0 - epsilon) {
-            Some(self.candidate_lists[largest_group_rep.0].ordering.clone())
+            Some(
+                self.candidate_lists[largest_group_rep.0]
+                    .ordering
+                    .iter()
+                    .map(|idx| self.character_ids.get_by_left(idx).unwrap().clone())
+                    .collect(),
+            )
         } else {
             None
         }
@@ -658,19 +656,22 @@ impl CharacterSortingData {
     pub fn get_most_valuable_matchups(
         &mut self,
         half_num_characters_requested: usize,
-        exclude_indices: Option<SmallVec<[SortingIndex; 4]>>,
-    ) -> SmallVec<[SortingIndex; 4]> {
+        exclude_chars: impl Iterator<Item = impl AsRef<str>>,
+    ) -> Vec<String> {
         // TODO: optimize using the algorithm in the appendix - only consider matchups between characters
         // that are adjacent in one or more candidate lists.
 
-        let max_sorting_index = SortingIndex(self.metadata.len() - 1);
+        let max_sorting_index = SortingIndex(self.character_ids.len() - 1);
+        let exclude_indices: BTreeSet<_> = exclude_chars
+            .map(|char_id| *self.character_ids.get_by_right(char_id.as_ref()).unwrap())
+            .collect();
 
         // We have to mutate (sort) the matchup cache, so we have to copy it.
         // This is much cheaper than recalculating all the convergences though.
         // This is the point at which we apply the exclusions.
-        let mut certainty_list: Vec<_> = match exclude_indices {
-            Some(exclusions) if exclusions.len() > 10 => {
-                let exclusions: BTreeSet<SortingIndex> = exclusions.into_iter().collect();
+        let mut certainty_list: Vec<_> = match exclude_indices.len() {
+            10.. => {
+                let exclusions: BTreeSet<SortingIndex> = exclude_indices.iter().copied().collect();
                 self.cached_matchup_data
                     .iter()
                     .enumerate()
@@ -684,20 +685,21 @@ impl CharacterSortingData {
                     })
                     .collect()
             }
-            Some(exclusions) => self
+            1..10 => self
                 .cached_matchup_data
                 .iter()
                 .enumerate()
                 .filter_map(|(index, CachedMatchupValue { convergence, .. })| {
                     let matchup = Matchup::from_index(MatchupIndex(index), max_sorting_index);
-                    if exclusions.contains(&matchup.a) || exclusions.contains(&matchup.b) {
+                    if exclude_indices.contains(&matchup.a) || exclude_indices.contains(&matchup.b)
+                    {
                         None
                     } else {
                         Some((*convergence, MatchupIndex(index)))
                     }
                 })
                 .collect(),
-            None => self
+            0 => self
                 .cached_matchup_data
                 .iter()
                 .enumerate()
@@ -721,64 +723,15 @@ impl CharacterSortingData {
             result.insert(selected_matchup.b);
         }
 
-        result.into_iter().collect()
+        result
+            .into_iter()
+            .map(|idx| self.character_ids.get_by_left(&idx).unwrap().clone())
+            .collect()
     }
-
-    // fn get_current_comparison_strength(
-    //     &self,
-    //     matchup: &Matchup,
-    //     now: Option<Timestamp>,
-    // ) -> EvaluationOutcome {
-    //     let max_sorting_index = SortingIndex(self.metadata.len() - 1);
-    //     let mut outcome = 0.0;
-
-    //     for (timestamp, evaluation) in self
-    //         .comparison_history
-    //         .get(&matchup.to_index(max_sorting_index))
-    //         .map(|x| x.iter())
-    //         .into_iter()
-    //         .flatten()
-    //     {
-    //         if let Some(now) = now {
-    //             let seconds_older_than_one_week = (now - *timestamp)
-    //                 .checked_sub((7.days(), SpanRelativeTo::days_are_24_hours()))
-    //                 .unwrap()
-    //                 .total((Unit::Second, SpanRelativeTo::days_are_24_hours()))
-    //                 .unwrap()
-    //                 .max(0.0);
-
-    //             // Decay is calculated on a sigmoid curve, and in particular a logistic function:
-    //             // decay(age) = L / (1 + e^(-k * (age - age_midpoint)))
-    //             // L is the carrying capacity, the upper bound of the curve; in our case it is 1.0;
-    //             // k affects the steepness of the curve;
-    //             // and age_midpoint is the age at which we want the decay to equal 0.5L = 0.5.
-
-    //             // We configure age_midpoint to be half a year (calculated using hours to avoid ambiguity
-    //             // in the length of a day):
-    //             let age_midpoint = (365 * 24 / 2).hours().total(Unit::Second).unwrap();
-
-    //             // k is determined by just checking a bunch of values to find one that produces a nice-looking graph
-    //             // on the scale of the number of seconds in a year.
-    //             const K: f64 = 0.000_000_2;
-
-    //             let logistic_denominator_exponent =
-    //                 -K * (seconds_older_than_one_week - age_midpoint);
-    //             let logistic_denominator = 1.0 + logistic_denominator_exponent.exp();
-    //             let logistic_result = 1.0 / logistic_denominator;
-
-    //             // The logistic function we calculated varies from 0 to 1, so we subtract it from 1 to get what we need.
-    //             outcome += evaluation.0 * (1.0 - logistic_result);
-    //         } else {
-    //             outcome += evaluation.0;
-    //         }
-    //     }
-
-    //     EvaluationOutcome(outcome)
-    // }
 
     /// Records that a new measurement was performed by the user.
     pub fn record_new_measurement(&mut self, matchup: &Matchup, outcome: EvaluationOutcome) {
-        let max_sorting_index = SortingIndex(self.metadata.len() - 1);
+        let max_sorting_index = SortingIndex(self.character_ids.len() - 1);
         let matchup_index = matchup.to_index(max_sorting_index);
 
         self.comparison_history
@@ -806,17 +759,13 @@ mod test {
     use rand::SeedableRng as _;
     use rand_chacha::ChaCha8Rng;
 
-    use crate::{
-        CharacterMetadata, CharacterSortingData, DebugRng, Matchup, MatchupIndex, SortingIndex,
-    };
+    use crate::{CharacterSortingData, DebugRng, Matchup, MatchupIndex, SortingIndex};
 
     const TEST_CHARACTER_LENGTH: usize = 250;
 
-    static TEST_CHARACTERS: LazyLock<Vec<CharacterMetadata>> = LazyLock::new(|| {
+    static TEST_CHARACTERS: LazyLock<Vec<String>> = LazyLock::new(|| {
         (0..TEST_CHARACTER_LENGTH)
-            .map(|_| CharacterMetadata {
-                globally_unique_id: String::default(),
-            })
+            .map(|_| String::default())
             .collect()
     });
 
@@ -826,8 +775,11 @@ mod test {
 
     #[test]
     fn construct_test() {
-        let sorting_data =
-            CharacterSortingData::new_with_rng(TEST_CHARACTERS.clone(), 200, get_fixed_seed_rng());
+        let sorting_data = CharacterSortingData::new_with_rng(
+            TEST_CHARACTERS.clone().into_iter(),
+            200,
+            get_fixed_seed_rng(),
+        );
         assert_eq!(sorting_data.get_unique_candidate_list_groups().len(), 200);
         assert!(sorting_data.get_final_sort_order(0.0).is_none());
         assert_eq!(

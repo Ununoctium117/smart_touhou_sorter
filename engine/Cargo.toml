@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+bimap = { version = "0.6.3", features = ["serde"] }
 getrandom = { workspace = true, optional = true }
 jiff = { workspace = true }
 log = { workspace = true }

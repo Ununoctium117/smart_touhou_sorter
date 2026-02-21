@@ -1,7 +1,7 @@
 use std::{cell::RefCell, io::Cursor};
 
 use base64::engine::general_purpose;
-use engine::{CharacterMetadata, CharacterSortingData};
+use engine::CharacterSortingData;
 use flate2::Compression;
 use wasm_bindgen::prelude::*;
 
@@ -13,14 +13,10 @@ thread_local! {
 #[wasm_bindgen]
 pub fn create_sorter(character_ids: Vec<String>, num_candidate_lists: usize) -> usize {
     SORTING_STATES.with_borrow_mut(|states| {
-        let metadata = character_ids
-            .into_iter()
-            .map(|id| CharacterMetadata {
-                globally_unique_id: id,
-            })
-            .collect();
-
-        states.push(CharacterSortingData::new(metadata, num_candidate_lists));
+        states.push(CharacterSortingData::new(
+            character_ids.into_iter(),
+            num_candidate_lists,
+        ));
         states.len() - 1
     })
 }
@@ -29,6 +25,14 @@ pub fn create_sorter(character_ids: Vec<String>, num_candidate_lists: usize) -> 
 #[wasm_bindgen]
 pub fn estimate_progress(handle: usize) -> f64 {
     SORTING_STATES.with_borrow(|states| states[handle].estimate_progress())
+}
+
+/// Determines the current best comparisons for a sorter.
+#[wasm_bindgen]
+pub fn get_best_comparisons(handle: usize, half_num: usize, exclude: Vec<String>) -> Vec<String> {
+    SORTING_STATES.with_borrow_mut(|states| {
+        states[handle].get_most_valuable_matchups(half_num, exclude.iter())
+    })
 }
 
 /// Saves the state of a sorter to a string, which can later be passed to `deserialize_sorter`.
