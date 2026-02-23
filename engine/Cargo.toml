@@ -4,17 +4,17 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-bimap = { version = "0.6.3", features = ["serde"] }
+bimap.workspace = true
 getrandom = { workspace = true, optional = true }
-jiff = { workspace = true }
-log = { workspace = true }
-ordered-float = { workspace = true }
-rand = { workspace = true }
-serde = { workspace = true }
-smallvec = { workspace = true }
+jiff.workspace = true
+log.workspace = true
+ordered-float.workspace = true
+rand.workspace = true
+serde.workspace = true
+smallvec.workspace = true
 
 [dev-dependencies]
-rand_chacha = { workspace = true }
+rand_chacha.workspace = true
 
 [features]
 wasm = ["dep:getrandom", "getrandom/wasm_js"]

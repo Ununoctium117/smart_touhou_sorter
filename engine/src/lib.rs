@@ -302,7 +302,7 @@ impl SampleCandidateList {
         };
 
         // Cache the results of range_to_resample.contains(idx) for all indexes.
-        let range_contains_map = {
+        let indexes_to_include = {
             let mut map = vec![false; max_sorting_index.0 + 1];
             for sorting_idx in range_to_resample.iter() {
                 map[sorting_idx.0] = true;
@@ -317,22 +317,9 @@ impl SampleCandidateList {
         let all_n_disputes = Self::get_all_n_disputes(
             None,
             max_sorting_index,
-            &comparison_history,
-            &range_contains_map,
+            comparison_history,
+            &indexes_to_include,
         );
-        // for (matchup_index, comparison_history) in &comparison_history.log {
-        //     let matchup = Matchup::from_index(*matchup_index, max_sorting_index);
-
-        //     if range_contains_map[matchup.a.0] && range_contains_map[matchup.b.0] {
-        //         for (_, comparison) in comparison_history {
-        //             if comparison.0.is_sign_positive() {
-        //                 *all_n_disputes.entry(matchup.a).or_default() += comparison.0;
-        //             } else {
-        //                 *all_n_disputes.entry(matchup.b).or_default() += comparison.0;
-        //             }
-        //         }
-        //     }
-        // }
 
         let base_beta = (1.0 - p) / p;
         let mut betas = range_to_resample

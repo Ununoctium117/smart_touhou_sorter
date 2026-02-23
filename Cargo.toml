@@ -1,7 +1,7 @@
 [workspace]
 members = [
     "engine",
-    "testbed",
+    # "testbed",
     "web-engine",
 ]
 resolver = "3"
@@ -11,6 +11,7 @@ opt-level = "s"
 
 [workspace.dependencies]
 anyhow = "1"
+bimap = { version = "0.6.3", features = ["serde"] }
 flate2 = "1"
 getrandom = { version = "0.3.4", features = ["wasm_js"] }
 log = "0.4"
