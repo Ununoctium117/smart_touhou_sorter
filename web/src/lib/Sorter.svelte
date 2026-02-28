@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { KeyedManifest, Manifest, SorterEngine } from "./SorterEngine";
-    import { draggable, Compartment, axis } from "@neodrag/svelte";
+    import { draggable, Compartment, axis, BoundsFrom } from "@neodrag/svelte";
 
     interface Props {
         sorterEngine: SorterEngine;
@@ -32,7 +32,9 @@
 
     // Determines if we're in vertical sorting mode (for mobile devices).
     let verticalSorting = $derived(windowHeight > windowWidth);
-    const draggableAxis = Compartment.of(() => axis(verticalSorting ? 'y' : 'x'));
+    const draggableAxis = Compartment.of(() =>
+        axis(verticalSorting ? "y" : "x"),
+    );
 
     function submitComparison() {
         // TODO actually submit
@@ -50,7 +52,12 @@
 
 <div id="interactableSorterArea">
     {#each currentBestComparison as comparisonCharId}
-        <div {@attach draggable(() => [draggableAxis])}>
+        <div
+            {@attach draggable(() => [
+                draggableAxis,
+                BoundsFrom.selector('#interactableSorterArea')
+            ])}
+        >
             <h4>{manifest[keyedManifest[comparisonCharId]].d}</h4>
         </div>
     {/each}
@@ -59,3 +66,27 @@
 <button onclick={submitComparison}> Submit Current Comparison </button>
 
 <h4>Candidate list convergence: {(percentComplete * 100).toFixed(2)}%</h4>
+
+<style lang="scss">
+    #interactableSorterArea {
+        display: flex;
+        justify-content: space-evenly;
+        border: 1px white;
+
+        @media (orientation: landscape) {
+            min-width: 80vw;
+            height: 50%;
+            flex-direction: row;
+        }
+
+        @media (orientation: portrait) {
+            width: 50%;
+            min-height: 80vh;
+            flex-direction: column;
+        }
+
+        > div {
+            user-select: none;
+        }
+    }
+</style>

@@ -40,15 +40,19 @@
 </script>
 
 <main>
-  <div class="card">
-    {#await sorterReady}
-      <!-- pending... -->
-      <h4>Loading sorter: {manifestName}...</h4>
-    {:then [manifest, keyedManifest, sorterEngine]}
-      <Sorter {sorterEngine} {manifestName} {manifest} {keyedManifest} />
-    {/await}
-  </div>
+  {#await sorterReady}
+    <!-- pending... -->
+    <h4>Loading sorter: {manifestName}...</h4>
+  {:then [manifest, keyedManifest, sorterEngine]}
+    <Sorter {sorterEngine} {manifestName} {manifest} {keyedManifest} />
+  {/await}
 </main>
 
-<style>
+<style lang="scss">
+  main {
+    display: flex;
+    flex-direction: column; // even in portrait mode we want a columnar layout
+    justify-content: space-around;
+    align-items: stretch;
+  }
 </style>
