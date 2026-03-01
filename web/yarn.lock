@@ -7,6 +7,114 @@
   resolved "https://registry.yarnpkg.com/@bufbuild/protobuf/-/protobuf-2.11.0.tgz#3ec3985c9074b23aea337957225fe15a0e845f8e"
   integrity sha512-sBXGT13cpmPR5BMgHE6UEEfEaShh5Ror6rfN3yEK5si7QVrtZg8LEPQb0VVhiLRUslD2yLnXtnRzG035J/mZXQ==
 
+"@dnd-kit-svelte/accessibility@latest":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@dnd-kit-svelte/accessibility/-/accessibility-0.0.11.tgz#79c6e356d5a5357f184caa865a7c873679a9feca"
+  integrity sha512-YkMjzabpnwELyeOSC2COV6EIGWZM8m4kgi/wIMwG0g/ZO3WWuzkMiLRLhYZqRkrEdpoz5tZnVclw+x/kcUjQHw==
+  dependencies:
+    "@dnd-kit-svelte/utilities" latest
+    esm-env "^1.2.2"
+    runed "^0.23.0"
+
+"@dnd-kit-svelte/core@^0.0.11", "@dnd-kit-svelte/core@latest":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@dnd-kit-svelte/core/-/core-0.0.11.tgz#94d89147ba941685a672b7273034ad4701967022"
+  integrity sha512-bVqutZhSOk3nQsjwJ0SveUrPeBgUO/wajfon1AiKA8mxfQhaUG97CfoQLs7tLW3YxSkHkLPhYRw9WQat7OMB7g==
+  dependencies:
+    "@dnd-kit-svelte/accessibility" latest
+    "@dnd-kit-svelte/utilities" latest
+    runed "^0.23.0"
+    svelte-toolbelt "^0.7.0"
+
+"@dnd-kit-svelte/sortable@^0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@dnd-kit-svelte/sortable/-/sortable-0.0.11.tgz#78076ea048983d73c635be4eabf46d4847f35643"
+  integrity sha512-QeFvpjR9KAIVFs0/S4kGtzSNZzEmIp+d8DiNCRUeVC2E4Z5P4INzdzJl7m1EM7UjvdNayfLWcMhLpyTIHqHxQQ==
+  dependencies:
+    "@dnd-kit-svelte/core" latest
+    "@dnd-kit-svelte/utilities" latest
+    runed "^0.23.0"
+    svelte-toolbelt "^0.7.0"
+
+"@dnd-kit-svelte/svelte@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@dnd-kit-svelte/svelte/-/svelte-0.1.6.tgz#f6024c616bdadd565849b9be3a795d5aec3b4a35"
+  integrity sha512-kpmNWeQoPFrJ4SNB0thRkdWtN3kiYMQI/SvEj6MTKTQ8W5VyHBrbXDRm+mdiTj9tzmG8jgCPg+Fgp3aYIU+Hug==
+  dependencies:
+    "@dnd-kit/abstract" "^0.2.3"
+    "@dnd-kit/collision" "^0.2.3"
+    "@dnd-kit/dom" "^0.2.3"
+    "@dnd-kit/geometry" "^0.1.21"
+    "@dnd-kit/state" "^0.2.3"
+
+"@dnd-kit-svelte/utilities@latest":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@dnd-kit-svelte/utilities/-/utilities-0.0.11.tgz#5a31ee04f8e2f5eb4be4df26cd9b9235fb8fe0cc"
+  integrity sha512-Y9Z016gLdieHiAVoteSBa1tvrgug1/Rl5wdKw/2g1Fd4G0q9HWIyPe2evKrv8H5ePfcNegA1jN7fneDVmHd3pQ==
+  dependencies:
+    svelte-toolbelt "^0.7.0"
+
+"@dnd-kit/abstract@^0.2.3", "@dnd-kit/abstract@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/abstract/-/abstract-0.2.4.tgz#60244be26cc217a022a4302ae2315c514b1df845"
+  integrity sha512-1F3JQaD8upvTNpfDrhvec57cldTEaUggmVrVJZIpRTIdZR7trKqS7vBYZR1mW3qNjWsxC91eEQAXYWv0vxXXuw==
+  dependencies:
+    "@dnd-kit/geometry" "^0.2.4"
+    "@dnd-kit/state" "^0.2.4"
+    tslib "^2.6.2"
+
+"@dnd-kit/collision@^0.2.3", "@dnd-kit/collision@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/collision/-/collision-0.2.4.tgz#94a3a05bb45e1967e8c10570f7124c264caa7afa"
+  integrity sha512-w8Vzq8MKu8MYvrwtasqQhw2l27v9eRMzL+jOdj8Qp0jnPQ1FICGgUwjAStZ87wO1Pc2WIt0rQWDDPIEyRd6S8A==
+  dependencies:
+    "@dnd-kit/abstract" "^0.2.4"
+    "@dnd-kit/geometry" "^0.2.4"
+    tslib "^2.6.2"
+
+"@dnd-kit/dom@^0.2.3":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/dom/-/dom-0.2.4.tgz#c92d66be7af0f435a0baa59ec4fd7e8d143d70ef"
+  integrity sha512-ZYIJgx/uyZvmGOHPBDbIeJfqa2xlEUHnkHEHcKlR/VMQz9NoSkPGcjPdcAjpwB+T4dleRQ4tZ8h9X5I3UdTQPw==
+  dependencies:
+    "@dnd-kit/abstract" "^0.2.4"
+    "@dnd-kit/collision" "^0.2.4"
+    "@dnd-kit/geometry" "^0.2.4"
+    "@dnd-kit/state" "^0.2.4"
+    tslib "^2.6.2"
+
+"@dnd-kit/geometry@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/geometry/-/geometry-0.1.21.tgz#530ba0c0bac05d33689e22d9b324a27e4831ae1b"
+  integrity sha512-Tir97wNJbopN2HgkD7AjAcoB3vvrVuUHvwdPALmNDUH0fWR637c4MKQ66YjjZAbUEAR8KL6mlDiHH4MzTLd7CQ==
+  dependencies:
+    "@dnd-kit/state" "^0.1.21"
+    tslib "^2.6.2"
+
+"@dnd-kit/geometry@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/geometry/-/geometry-0.2.4.tgz#fbcea32e845e7cdbdb6336df90c167269b853a4c"
+  integrity sha512-S8wVj4rQIErimDQoRT0n1+lgxPvlO/gvzT9/1vzyyw1U4bB/S8avtrI+REVw/jH84c/dii+GwrrzVkDDoIluNw==
+  dependencies:
+    "@dnd-kit/state" "^0.2.4"
+    tslib "^2.6.2"
+
+"@dnd-kit/state@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/state/-/state-0.1.21.tgz#415ce01ce720e262b8a879831a09f4406a4cb643"
+  integrity sha512-pdhntEPvn/QttcF295bOJpWiLsRqA/Iczh1ODOJUxGiR+E4GkYVz9VapNNm9gDq6ST0tr/e1Q2xBztUHlJqQgA==
+  dependencies:
+    "@preact/signals-core" "^1.10.0"
+    tslib "^2.6.2"
+
+"@dnd-kit/state@^0.2.3", "@dnd-kit/state@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@dnd-kit/state/-/state-0.2.4.tgz#57842643ad963861845d1364783d517c9318876c"
+  integrity sha512-mPtQfmqBZBcVKa+Fi8AV2ocQWa+phvZa9Muq3PxFM3WIyjrFiEosGGPiPcx5hC3K+i2gkmr6Msc7iPrrpYkB5g==
+  dependencies:
+    "@preact/signals-core" "^1.10.0"
+    tslib "^2.6.2"
+
 "@emnapi/core@^1.7.1":
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/@emnapi/core/-/core-1.8.1.tgz#fd9efe721a616288345ffee17a1f26ac5dd01349"
@@ -202,16 +310,6 @@
     "@emnapi/runtime" "^1.7.1"
     "@tybys/wasm-util" "^0.10.1"
 
-"@neodrag/core@^3.0.0-next.8":
-  version "3.0.0-next.8"
-  resolved "https://registry.yarnpkg.com/@neodrag/core/-/core-3.0.0-next.8.tgz#0cab9dce8b0430ce2dfe61bcfae3cd2710be9b02"
-  integrity sha512-RNFwbo2w6M7BEzCh7pls68X2h3n+ofFDW1XnGyIzhtJ2bb8J/2VqixOpOlw9NfSJ61xgUC5ymGQbQFg5BKsWBA==
-
-"@neodrag/svelte@^3.0.0-next.8":
-  version "3.0.0-next.8"
-  resolved "https://registry.yarnpkg.com/@neodrag/svelte/-/svelte-3.0.0-next.8.tgz#ae5f9d045fc454b82be3422c04718bfb26bc4039"
-  integrity sha512-VkTnOqiHpAaEK5jp2PqQPEEx5AaNGVoKeoC2TuWd2xuteGOVq7NqQjNC4sxk0HAVysfYOC9YhYOsVyRiKo2LFw==
-
 "@oxc-project/runtime@0.97.0":
   version "0.97.0"
   resolved "https://registry.yarnpkg.com/@oxc-project/runtime/-/runtime-0.97.0.tgz#eeb9c0f8901499ae9b8fcca2ff02539dc1e898a7"
@@ -310,6 +408,11 @@
     "@parcel/watcher-win32-arm64" "2.5.6"
     "@parcel/watcher-win32-ia32" "2.5.6"
     "@parcel/watcher-win32-x64" "2.5.6"
+
+"@preact/signals-core@^1.10.0":
+  version "1.13.0"
+  resolved "https://registry.yarnpkg.com/@preact/signals-core/-/signals-core-1.13.0.tgz#ed770df2855701e7b42828fae5a348edeee9a3df"
+  integrity sha512-slT6XeTCAbdql61GVLlGU4x7XHI7kCZV5Um5uhE4zLX4ApgiiXc0UYFvVOKq06xcovzp7p+61l68oPi563ARKg==
 
 "@rolldown/binding-android-arm64@1.0.0-beta.50":
   version "1.0.0-beta.50"
@@ -888,7 +991,7 @@ escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha512-vbRorB5FUQWvla16U8R/qgaFIya2qGzwDrNmCZuYKrbdSUMG6I1ZCGQRefkRVhuOkIGVne7BQ35DSfo1qvJqFg==
 
-esm-env@^1.2.1:
+esm-env@^1.0.0, esm-env@^1.2.1, esm-env@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/esm-env/-/esm-env-1.2.2.tgz#263c9455c55861f41618df31b20cb571fc20b75e"
   integrity sha512-Epxrv+Nr/CaL4ZcFGPJIYLWFom+YeV1DqMLHJoEd9SYRxNbaFruBwfEX/kkHUJf55j2+TUbmDcmuilbP1TmXHA==
@@ -1052,6 +1155,11 @@ immutable@^5.0.2:
   version "5.1.4"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-5.1.4.tgz#e3f8c1fe7b567d56cf26698f31918c241dae8c1f"
   integrity sha512-p6u1bG3YSnINT5RQmx/yRZBpenIl30kVxkTLDyHLIMk0gict704Q9n+thfDI7lTRm9vXdDYutVzXhzcThxTnXA==
+
+inline-style-parser@0.2.7:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/inline-style-parser/-/inline-style-parser-0.2.7.tgz#b1fc68bfc0313b8685745e4464e37f9376b9c909"
+  integrity sha512-Nb2ctOyNR8DqQoR0OwRG95uNWIC0C1lCgf5Naz5H6Ji72KZ8OcFZLz2P5sNgwlyoJ8Yif11oMuYs5pBQa86csA==
 
 internal-slot@^1.1.0:
   version "1.1.0"
@@ -1601,6 +1709,13 @@ rolldown@1.0.0-beta.50:
   optionalDependencies:
     fsevents "~2.3.2"
 
+runed@^0.23.0, runed@^0.23.2:
+  version "0.23.4"
+  resolved "https://registry.yarnpkg.com/runed/-/runed-0.23.4.tgz#0b68fd24434e65dd8cbd9f7072521d6f5f409eba"
+  integrity sha512-9q8oUiBYeXIDLWNK5DfCWlkL0EW3oGbk845VdKlPeia28l751VpfesaB/+7pI6rnbx1I6rqoZ2fZxptOJLxILA==
+  dependencies:
+    esm-env "^1.0.0"
+
 rxjs@^7.4.0:
   version "7.8.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.8.2.tgz#955bc473ed8af11a002a2be52071bf475638607b"
@@ -1959,6 +2074,13 @@ strip-bom@^3.0.0:
   resolved "https://registry.yarnpkg.com/strip-bom/-/strip-bom-3.0.0.tgz#2334c18e9c759f7bdd56fdef7e9ae3d588e68ed3"
   integrity sha512-vavAMRXOgBVNF6nyEEmL3DBK19iRpDcoIwW+swQ+CbGiu7lju6t+JklA1MHweoWtadgt4ISVUsXLyDq34ddcwA==
 
+style-to-object@^1.0.8:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/style-to-object/-/style-to-object-1.0.14.tgz#1d22f0e7266bb8c6d8cae5caf4ec4f005e08f611"
+  integrity sha512-LIN7rULI0jBscWQYaSswptyderlarFkjQ+t79nzty8tcIAceVomEVlLzH5VP4Cmsv6MtKhs7qaAiwlcp+Mgaxw==
+  dependencies:
+    inline-style-parser "0.2.7"
+
 supports-color@^5.3.0:
   version "5.5.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
@@ -1988,6 +2110,15 @@ svelte-check@^4.3.4:
     fdir "^6.2.0"
     picocolors "^1.0.0"
     sade "^1.7.4"
+
+svelte-toolbelt@^0.7.0:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/svelte-toolbelt/-/svelte-toolbelt-0.7.1.tgz#63e9c6629456a1a0dd57812f85426e4631fd754e"
+  integrity sha512-HcBOcR17Vx9bjaOceUvxkY3nGmbBmCBBbuWLLEWO6jtmWH8f/QoWmbyUfQZrpDINH39en1b8mptfPQT9VKQ1xQ==
+  dependencies:
+    clsx "^2.1.1"
+    runed "^0.23.2"
+    style-to-object "^1.0.8"
 
 svelte@^5.43.8:
   version "5.53.6"
@@ -2031,7 +2162,7 @@ tinyglobby@^0.2.15:
     fdir "^6.5.0"
     picomatch "^4.0.3"
 
-tslib@^2.1.0, tslib@^2.4.0:
+tslib@^2.1.0, tslib@^2.4.0, tslib@^2.6.2:
   version "2.8.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.8.1.tgz#612efe4ed235d567e8aba5f2a5fab70280ade83f"
   integrity sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==

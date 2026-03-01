@@ -36,8 +36,9 @@
     "rollup": "npm:@rollup/wasm-node@*"
   },
   "dependencies": {
-    "@neodrag/core": "^3.0.0-next.8",
-    "@neodrag/svelte": "^3.0.0-next.8",
+    "@dnd-kit-svelte/core": "^0.0.11",
+    "@dnd-kit-svelte/sortable": "^0.0.11",
+    "@dnd-kit-svelte/svelte": "^0.1.6",
     "web-engine": "link:../web-engine/pkg"
   }
 }
