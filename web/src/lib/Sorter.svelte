@@ -1,9 +1,7 @@
 <script lang="ts">
     import type { KeyedManifest, Manifest, SorterEngine } from "./SorterEngine";
-    import {
-        DndContext,
-        type DragEndEvent,
-    } from "@dnd-kit-svelte/core";
+    import { DragDropProvider } from "@dnd-kit-svelte/svelte";
+    import { RestrictToWindowEdges } from "@dnd-kit-svelte/svelte/modifiers";
     import Droppable from "./DnD/Droppable.svelte";
     import { sensors } from "./DnD/DndUtils";
     import DraggableCharacter from "./DnD/DraggableCharacter.svelte";
@@ -27,10 +25,17 @@
         sorterEngine.GetBestComparisons(2, []),
     );
 
-    const containers = [0, 1, 2, 3];
+    const containers = [0, 1, 2, 3, 4];
+    const containerLabels = [
+        "Least Liked 😒",
+        null,
+        null,
+        null,
+        "Most Liked 💕",
+    ];
     // Intentional: We're only using this to set the initial value.
     // svelte-ignore state_referenced_locally
-    let containersForEachCharacter: (number | null)[] = $state(
+    let containerForEachCharacter: (number | null)[] = $state(
         currentBestComparison.map(() => null),
     );
 
@@ -51,15 +56,74 @@
 
         percentComplete = sorterEngine.EstimateProgress();
         currentBestComparison = sorterEngine.GetBestComparisons(2, []);
-        containersForEachCharacter = currentBestComparison.map(() => null);
-    }
-
-    function onDragEnd(evt: DragEndEvent) {
-        // TODO
+        containerForEachCharacter = currentBestComparison.map(() => null);
     }
 </script>
 
 <svelte:window bind:innerWidth={windowWidth} bind:innerHeight={windowHeight} />
+
+<h3>Sorting: {manifestName}</h3>
+
+<div id="hintPanel">
+    <h4>Drag characters to arrange them from left to right.</h4>
+</div>
+
+<DragDropProvider
+    {sensors}
+    modifiers={[RestrictToWindowEdges]}
+    onDragEnd={(event) => {
+        if (event.canceled) {
+            return;
+        }
+        const sourceId = event.operation.source?.id;
+        const sourceIndex = currentBestComparison.findIndex(
+            (charId) => charId == sourceId,
+        );
+        const targetContainer = event.operation.target?.id;
+
+        if (typeof targetContainer === "number") {
+            containerForEachCharacter[sourceIndex] = targetContainer;
+        } else {
+            containerForEachCharacter[sourceIndex] = null;
+        }
+    }}
+>
+    <div id="interactableSorterArea">
+        {#each containers as container, index}
+            <div
+                class={verticalSorting
+                    ? "sorterTargetVertical"
+                    : "sorterTargetHorizontal"}
+            >
+                <div class="dropTargetLabel">
+                    {containerLabels[index] || "\xA0"}
+                </div>
+                <Droppable id={container} class="sorterDropTargetInner">
+                    {#each currentBestComparison as characterId, index}
+                        {#if containerForEachCharacter[index] === container}
+                            {@render characterRender(characterId)}
+                        {/if}
+                    {:else}
+                        <span>Drop Here</span>
+                    {/each}
+                </Droppable>
+            </div>
+        {/each}
+    </div>
+    <div id="characterDefaultPosition">
+        {#each currentBestComparison as characterId, index}
+            {#if containerForEachCharacter[index] === null}
+                {@render characterRender(characterId)}
+            {/if}
+        {/each}
+
+        {#if containerForEachCharacter.findIndex((e) => e === null) === -1}
+            <span class="submitHint"
+                >Submit comparison to load more characters!</span
+            >
+        {/if}
+    </div>
+</DragDropProvider>
 
 {#snippet characterRender(characterId: string)}
     <DraggableCharacter
@@ -69,30 +133,9 @@
     ></DraggableCharacter>
 {/snippet}
 
-<h3>Sorting: {manifestName}</h3>
-
-<DndContext {sensors} {onDragEnd}>
-    <div id="interactableSorterArea">
-        {#each containers as container}
-            <Droppable id={container}>
-                {#each currentBestComparison as characterId, index}
-                    {#if containersForEachCharacter[index] === container}
-                        {@render characterRender(characterId)}
-                    {/if}
-                {/each}
-            </Droppable>
-        {/each}
-    </div>
-    <div>
-        {#each currentBestComparison as characterId, index}
-            {#if containersForEachCharacter[index] === null}
-                {@render characterRender(characterId)}
-            {/if}
-        {/each}
-    </div>
-</DndContext>
-
-<button onclick={submitComparison}> Submit Current Comparison </button>
+<button id="submitButton" onclick={submitComparison}>
+    Submit Current Comparison
+</button>
 
 <h4>Candidate list convergence: {(percentComplete * 100).toFixed(2)}%</h4>
 
@@ -113,5 +156,55 @@
             min-height: 80vh;
             flex-direction: column;
         }
+
+        :global(.sorterDropTargetInner) {
+            border: 2px solid gray;
+            min-width: 15vw;
+            min-height: 15vh;
+            flex: 1;
+            margin: 15px;
+            padding: 15px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropTargetLabel {
+            font-weight: lighter;
+            font-size: smaller;
+        }
+    }
+
+    .sorterTargetVertical {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .sorterTargetHorizontal {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #characterDefaultPosition {
+        flex: 1;
+        align-self: stretch;
+
+        display: flex;
+        justify-content: space-evenly;
+        border: 1px solid white;
+
+        margin: 15px;
+    }
+
+    #hintPanel {
+        text-align: left;
+        align-self: flex-start;
+        margin: 15px;
+    }
+
+    .submitHint {
+        font-size: smaller;
+        font-weight: lighter;
+        margin: 15px;
     }
 </style>

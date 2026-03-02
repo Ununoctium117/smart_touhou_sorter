@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { useDroppable, type UseDroppableInput } from "@dnd-kit-svelte/svelte";
+    import {
+        useDroppable,
+        type UseDroppableInput,
+    } from "@dnd-kit-svelte/svelte";
     import type { Snippet } from "svelte";
     import type { ClassValue } from "svelte/elements";
 
@@ -9,9 +12,9 @@
     }
 
     let { children, class: className, ...rest }: DroppableProps = $props();
-    const droppable = $derived(useDroppable(rest));
+    const { ref } = $derived(useDroppable(rest));
 </script>
 
-<div class={className} bind:this={droppable.droppable.element}>
+<div class={className} {@attach ref}>
     {@render children()}
 </div>

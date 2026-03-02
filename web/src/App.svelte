@@ -53,6 +53,6 @@
     display: flex;
     flex-direction: column; // even in portrait mode we want a columnar layout
     justify-content: space-around;
-    align-items: stretch;
+    align-items: center;
   }
 </style>
